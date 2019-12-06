@@ -382,7 +382,7 @@ public class MulticastServer extends Thread {
 
                 //gets first link in queue
                 ws = linkQueue.get(0);
-                System.out.println(ws + "---------------------");
+                System.out.println(ws + "-------------------------");
                 try {
                     if (! ws.startsWith("http://") && ! ws.startsWith("https://"))
                         ws = "http://".concat(ws);
