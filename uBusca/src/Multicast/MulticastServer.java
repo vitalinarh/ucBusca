@@ -465,7 +465,7 @@ public class MulticastServer extends Thread {
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
                 notifyIndexationSocket.joinGroup(group);
 
-                String indexationNotification = "id - " + myId + " ; userId - " + this.clientId + " ; url - " + this.originalURL + " ; type - IndexationComplete";
+                String indexationNotification = "id | " + myId + " ; userId | " + this.clientId + " ; url | " + this.originalURL + " ; type | IndexationComplete";
                 byte[] buffer = indexationNotification.getBytes();
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORTout);
 
@@ -603,7 +603,7 @@ public class MulticastServer extends Thread {
                 //if type equals CheckLife server sends message saying that it's alive
                 if(type.equals("CheckLife")) {
 
-                    output = "id - " + this.myId + "; type - ImAlive";
+                    output = "id | " + this.myId + "; type | ImAlive";
                     byte[] buffer2 = output.getBytes();
                     DatagramPacket packet2 = new DatagramPacket(buffer2, buffer2.length, group, PORTout);
                     socketOut.send(packet2);
@@ -645,7 +645,7 @@ public class MulticastServer extends Thread {
                 //type for registry for new users
                 else if(type.equals("register")) {
 
-                    User user = new User(array[2].split("-")[1], array[3].split("-")[1], id);
+                    User user = new User(array[2].split("\\|")[1], array[3].split("\\|")[1], id);
                     output = "";
                     int flag = 0;
 
