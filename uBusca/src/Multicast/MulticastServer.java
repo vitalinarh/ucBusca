@@ -453,7 +453,8 @@ public class MulticastServer extends Thread {
                     indexBuild.indexBuilder(text, ws);
 
                 } catch (IOException e) {
-                    System.out.println("BAD LINK");
+                    //System.out.println("BAD LINK");
+                    System.out.println(e);
                     String url = linkQueue.get(0);
                     linkQueue.remove(0);
                 }

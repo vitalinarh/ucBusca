@@ -248,7 +248,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
      */
     @Override
     public String searchPagesConnectedToPage(String searchQuery, int clientId) throws RemoteException {
-        String command = "id - " + clientId + " ; type - byReference ; url - " + searchQuery + "";
+        String command = "id | " + clientId + " ; type | byReference ; url | " + searchQuery + "";
 
         //Sends the url to the multicast server and waits for the response.
         String response = sendToGroup(command, clientId);
