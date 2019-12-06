@@ -95,21 +95,21 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         return clientId;
     }
 
-    //todo:
     /**
-     * UNFINISHED METHOD.
+     * RMI method: logs the user and gives him his definitive ID.
      *
-     * @param username
-     * @param password
-     * @param clientId
-     * @param client
-     * @return
-     * @throws RemoteException
+     * @param username String - name of the user.
+     * @param password String - password of the user.
+     * @param clientId int - unique identifier of the client.
+     * @param client RMI_C - reference to the client's interface. Used for remote method invocation.
+     * @return return a array of two ints; first is the user's definitive id adnt he second the login status (1 for admins, 0 for users and -1 for non registered users).
+     * @throws RemoteException caught outside of scope.
      */
     @Override
     public int[] login(String username, String password, int clientId, RMI_C client) throws RemoteException {
-        String command = "id - " + clientId + " ; type - login ; username - " + username + " ; password - " + password + "";
+        String command = "id | " + clientId + " ; type | login ; username | " + username + " ; password | " + password + "";
 
+        //Sends the Multicast server the protocol and waits for its response.
         String response = sendToGroup(command, clientId);
 
         String [] newResponse = response.split("[ |;]+");
@@ -118,37 +118,39 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
 
         switch(newResponse[newResponse.length - 1]){
 
-            case("Admin"):
+            case("Admin"): //If the client is an admin
 
+                //Getting the definitive id and the validation int.
                 idStatus = new int[2];
                 idStatus[0] = Integer.parseInt(newResponse[7]);
                 idStatus[1] = 1;
 
+                //Uppdate the user's interface
                 this.listClient.put( (Integer) Integer.parseInt(newResponse[7]), client);
 
-                //todo: Need to update the notification database on the multicast server. And if the RMIServer dies, the notifications also die.
-                //todo: So, do I forget about storing the notifs on the RMIServer, or do I update them from time to time?
-                //todo: If I had the notificationBoard on the Multicast servers, I would have to sync them and that's not good.
-                //todo: But if I wrote them to disc and read from there every single time... Need to think about it.
-
-                //todo: Forget about making the offline callbacks a surefire. Online callbacks and most of the offline ones work too.
-
+                //Check wether or not the user has any pending notifications.
                 this.checkNotifications(idStatus[0], client);
 
+                //return an int for validation.
                 return idStatus;
 
-            case("User"):
+            case("User"): //If the client is an user
 
+                //Getting the definitive id and the validation int.
                 idStatus = new int[2];
                 idStatus[0] = Integer.parseInt(newResponse[7]);
                 idStatus[1] = 0;
 
+                //Uppdate the user's interface
                 this.listClient.put( (Integer) Integer.parseInt(newResponse[7]), client);
 
+                //Check wether or not the user has any pending notifications.
                 this.checkNotifications(idStatus[0], client);
 
+                //return an int for validation.
                 return idStatus;
-            case("incorrect"):
+
+            case("incorrect"): //If the client entered the wrong credentials
 
             default:
                 idStatus = new int[2];
@@ -176,6 +178,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         if( (notifications = this.notificationBoard.get(clientId)) != null)
             client.sendToClient(notifications);
 
+        //Removes the now sent notifications from the board
         this.notificationBoard.put(clientId, null);
     }
 
@@ -192,7 +195,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
      */
     @Override
     public int register(String newUsername, String newPassword, int clientId) throws RemoteException {
-        String command = "id - " + clientId + " ; type - register ; username - " + newUsername + " ; password - " + newPassword + "";
+        String command = "id | " + clientId + " ; type | register ; username | " + newUsername + " ; password | " + newPassword + "";
 
         //Sends the credentials to the multicast servers.
         String response = sendToGroup(command, clientId);
@@ -217,16 +220,17 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
     public String searchWords(String searchQuery, int clientId) throws RemoteException {
         String[] query = searchQuery.split(" ");
 
-        String command = "id - " + clientId + " ; type - termSearch ; terms - ";
+        String command = "id | " + clientId + " ; type | termSearch ; terms | ";
 
+        //Appends every term entered to the protocol.
         for(int i=0 ; i<query.length ; i++){
             command += query[i] + ",";
         }
 
-        Random generator = new Random();
-
+        //Sends the terms to the multicast server and waits for the response.
         String response = sendToGroup(command, clientId);
 
+        //returns the search results
         return response;
     }
 
@@ -246,8 +250,10 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
     public String searchPagesConnectedToPage(String searchQuery, int clientId) throws RemoteException {
         String command = "id - " + clientId + " ; type - byReference ; url - " + searchQuery + "";
 
+        //Sends the url to the multicast server and waits for the response.
         String response = sendToGroup(command, clientId);
 
+        //returns the search results
         return response;
     }
 
@@ -262,10 +268,12 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
      */
     @Override
     public String getSearchHistory(int clientId) throws RemoteException {
-        String command = "id - " + clientId + " ; type - userSearches";
+        String command = "id | " + clientId + " ; type | userSearches";
 
+        //Sends the request to the multicast server and waits for the response.
         String response = sendToGroup(command, clientId);
 
+        //returns the user's search history
         return response;
     }
 
@@ -286,12 +294,9 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         Random generator = new Random();
         String command;
 
-        /*while(this.aliveMulticastServers.isEmpty()){
-            System.out.println("I'm stuck");
-        }*/
+        command = "id | " + clientId + " ; type | urlInsert ; url | " + urlToIndex + " ; serverId | " + 2  + "";
 
-        command = "id - " + clientId + " ; type - urlInsert ; url - " + urlToIndex + " ; serverId - " + 2 /*this.aliveMulticastServers.get(generator.nextInt(aliveMulticastServers.size() - 1))*/ + "";
-
+        //Sends the url to the multicast server and waits for the response.
         String response = sendToGroup(command, clientId);
 
         if(response.equals("type | status ; urlInsertion | successful ; msg | Indexation In Progress"))
@@ -326,8 +331,9 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
      */
     @Override
     public int adminGiveAdminPrivilege(String username, int clientId) throws RemoteException {
-        String command = "id - " + clientId + " ; type - adminAccess ; user - " + username + "";
+        String command = "id | " + clientId + " ; type | adminAccess ; user | " + username + "";
 
+        //Sends the user's name to the multicast server and waits for the response.
         String response = sendToGroup(command, clientId);
 
         //Check if whether or not that user exist
@@ -417,15 +423,16 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
      * @author Rodrigo Martins
      */
     public void secondary() throws IOException {
-        int tries = 0;
+        int tries = 0; //Counter used to track how many time the connection has been tested
 
         while(true){
             try {
-                LocateRegistry.getRegistry(7001).lookup("primary");
-                tries = 0;
+                LocateRegistry.getRegistry(7001).lookup("primary"); //Attempts to get the primary server's reference
+                tries = 0; //If it succeeds, it resets the tries counter.
             } catch (NotBoundException | RemoteException e) {
                 tries++;
 
+                //When 5 seconds of retries (1 second in-between each try), the server terminates the other server - STONITH - to assure its death.
                 if(tries>5) {
                     String cmd = "taskkill /F /PID " + this.primaryPID;
                     Runtime.getRuntime().exec(cmd);
@@ -449,10 +456,13 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
     @Override
     public int getServerPID() throws RemoteException {
 
+        //Gets the name of the process.
         String name =  ManagementFactory.getRuntimeMXBean().getName();
 
+        //Splits the name to get the PID
         String [] newName = name.split("@");
 
+        //returns the primary server's PID.
         return Integer.parseInt(newName[0]);
     }
 
@@ -481,18 +491,20 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
     public void start() {
         while(true) {
             try {
+                //Primary server tries to get the registry, causing it to fail since it started first and get caught by the exception.
+                //The secondary succeeds and proceeds to the next line.
                 RMI_S server = (RMI_S) LocateRegistry.getRegistry(7001).lookup("primary");
 
-                this.primaryPID = server.getServerPID();
+                this.primaryPID = server.getServerPID(); //Secondary server gets the primary server's PID for STONITH.
 
-                this.secondary();
+                this.secondary(); //The secondary server starts its check cycle of the primary server's vitals.
 
-                this.createAndBind();
+                this.createAndBind(); //When the secondary server asserts that the primary is dead, it takes its place.
 
                 break;
             } catch (NotBoundException | RemoteException e) {
                 try{
-                    this.createAndBind();
+                    this.createAndBind(); //Primary creates a registry and binds itself to it.
 
                     break;
                 } catch (RemoteException ex) {
@@ -503,10 +515,10 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
             }
         }
 
-        //CheckLifeThread lifeChecker = new CheckLifeThread();
+        //CheckLifeThread lifeChecker = new CheckLifeThread(); //Thread that pings the multicast servers for their id.
 
-        String MULTICAST_ADDRESS = "224.0.0.0";
-        int PORT = 3999;
+        String MULTICAST_ADDRESS = "224.0.0.0"; //Multicast group.
+        int PORT = 3999; //Fixed port of the RMI server.
 
         MulticastSocket socket = null;
         while(true) {
@@ -516,10 +528,13 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                 socket.joinGroup(group);
 
                 while (true) {
+
+                    //The server waits for any incoming packets from the multicast group.
                     byte[] buffer = new byte[8000];
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                     socket.receive(packet);
 
+                    //The server prints the message contained within the received packet.
                     System.out.println("Received packet from " + packet.getAddress().getHostAddress() + ":" + packet.getPort() + " with message:");
                     String message = new String(packet.getData(), 0, packet.getLength());
                     System.out.println(message);
@@ -530,35 +545,40 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                     String newNotification;
                     RMI_C client;
 
+                    //Analysis of the message
                     switch(parsedMessage[parsedMessage.length - 1]){
-                        case("ImAlive"):
-                            this.aliveMulticastServers.add(Long.parseLong(parsedMessage[1]));
+                        case("ImAlive"): //If it's assuring a multicast server's vitals.
+                            this.aliveMulticastServers.add(Long.parseLong(parsedMessage[1])); //He's added to the list of alive multicast servers.
 
                             break;
 
-                        case("IndexationComplete"):
+                        case("IndexationComplete"): //If it's a notification regarding the completion of an indexation.
 
-                            //SendSyncOrderThread syncIndex = new SendSyncOrderThread();
+                            //SendSyncOrderThread syncIndex = new SendSyncOrderThread(); //Commands the multicast servers to merge their indexes
 
+                            //Gets the id of the intended recipient of the notification.
                             clientId = Integer.parseInt(parsedMessage[3]);
 
+                            //Creates the message and gets the most recent interface of the user
                             newNotification = "The url " + parsedMessage[5] + " has been indexed!";
                             client = this.listClient.get(clientId);
 
                             try {
 
-                                String response = client.sendToClient(newNotification);
+                                String response = client.sendToClient(newNotification); //Tries relay the notification to the user
 
-                            } catch (RemoteException e){
+                            } catch (RemoteException e){ //If the suer was offline
 
                                 ArrayList<String> clientNotifs;
 
+                                //We get, or create a ArrayList<String> to keep the notification in the notification board
                                 if(this.notificationBoard.containsKey(clientId) && this.notificationBoard.get(clientId) != null) {
                                     clientNotifs = this.notificationBoard.get(clientId);
                                 } else {
                                     clientNotifs =  new ArrayList<>();
                                 }
 
+                                //The notification is added to the board.
                                 clientNotifs.add(newNotification);
                                 this.notificationBoard.put(clientId, clientNotifs);
 
@@ -566,28 +586,31 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
 
                             break;
 
-                        case("AdminAccess"):
+                        case("AdminAccess"): //If the message is a notification of received admin privileges
 
+                            //We get the recipient's id.
                             clientId = Integer.parseInt(parsedMessage[3]);
 
+                            //We build the notification and get the user's most recent interface
                             newNotification = "You have been given admin permissions! Restart your client to access the admin functionalities.";
                             client = this.listClient.get(clientId);
 
                             try {
 
-                                String response = client.sendToClient(newNotification);
+                                String response = client.sendToClient(newNotification); //We attempt to send the notification
 
-                            } catch (RemoteException e){
-                                System.out.println("User was offline - admin access");
+                            } catch (RemoteException e){ //If the user is offline
 
                                 ArrayList<String> clientNotifs;
 
+                                //We get, or create a ArrayList<String> to keep the notification in the notification board
                                 if(this.notificationBoard.containsKey(clientId) && this.notificationBoard.get(clientId) != null) {
                                     clientNotifs = this.notificationBoard.get(clientId);
                                 } else {
                                     clientNotifs =  new ArrayList<>();
                                 }
 
+                                //The notification is added to the board.
                                 clientNotifs.add(newNotification);
                                 this.notificationBoard.put(clientId, clientNotifs);
 
@@ -597,12 +620,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                             break;
 
                         default:
-
-                        //todo: If it receives an "indexation completed" notification, it calls the SendSyncOrderThread to sync the Multicast servers' threads.
-
-                        //todo: If it receives an "admin permissions given" notification, it tries to send it to the client. If it fails - user is offline -,
-                        //todo: it updates the notification board.
-
+                            break;
                     }
 
                     //todo: RIP cbt
@@ -645,7 +663,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
             int multicastPort = 4321;
             MulticastSocket checkLifeSocket = null;
 
-            String check = "id - 1 ; type - CheckLife";
+            String check = "id | 1 ; type | CheckLife";
 
             try{
                 checkLifeSocket = new MulticastSocket();
@@ -655,6 +673,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                 byte[] buffer = check.getBytes();
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, multicastPort);
 
+                //A check life packet is sent every 20 seconds.
                 while(true) {
                     checkLifeSocket.send(packet);
                     sleep(20000); //10s in-between checks
@@ -698,7 +717,8 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
 
             Random generator = new Random();
 
-            String check = "id - 1 ; type - SyncMaster ; serverId - " + aliveMulticastServers.get(generator.nextInt(aliveMulticastServers.size() - 1)) + "";
+            //A randomly selected multicast server will be selected to merge the indexes.
+            String check = "id | 1 ; type | SyncMaster ; serverId | " + aliveMulticastServers.get(generator.nextInt(aliveMulticastServers.size() - 1)) + "";
 
             try{
                 sendSyncOrder = new MulticastSocket();
