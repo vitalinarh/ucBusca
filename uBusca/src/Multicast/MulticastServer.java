@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  *Class Multicast.
@@ -382,7 +383,7 @@ public class MulticastServer extends Thread {
 
                 //gets first link in queue
                 ws = linkQueue.get(0);
-                System.out.println(ws + "-------------------------");
+
                 try {
                     if (! ws.startsWith("http://") && ! ws.startsWith("https://"))
                         ws = "http://".concat(ws);
@@ -399,19 +400,18 @@ public class MulticastServer extends Thread {
                             continue;
                         }
 
-                        // Shall we ignore local links? Otherwise we have to rebuild them for future parsing
-                        if (!link.attr("href").startsWith("http")) {
-                            continue;
-                        }
-
                         //key is the link url
                         String key = link.  attr("href");
 
-                        if (! key.startsWith("http://") && ! key.startsWith("https://"))
-                            key = "http://".concat(key);
+                        // Shall we ignore local links? Otherwise we have to rebuild them for future parsing
+                        if (!link.attr("href").startsWith("http")) {
+                            key = ws.concat(key);
+                        }
 
                         //adds to link queue
                         linkQueue.add(key);
+
+                        System.out.println(key);
 
                         //adds link to reference ArrayList
                         if (!urlMentionsList.containsKey(key)) {
@@ -434,6 +434,9 @@ public class MulticastServer extends Thread {
 
                     //removes first link in queue that was just indexed
                     linkQueue.remove(0);
+                    for(String s: linkQueue){
+                        System.out.println(s);
+                    }
 
                     text = doc.text(); // We can use doc.body().text() if we only want to get text from <body></body>
 
@@ -447,6 +450,7 @@ public class MulticastServer extends Thread {
                     //recursive counter is incremented
                     recursiveCounter++;
                     System.out.println(recursiveCounter);
+
 
                     //puts words and its link in TreeMap
                     WebCrawler indexBuild = new WebCrawler(this.clientId, this.originalURL);
@@ -597,8 +601,8 @@ public class MulticastServer extends Thread {
                 String output = "";
 
                 String type;
-                int id = Integer.parseInt(array[0].split("\\|")[1]);
-                type = array[1].split("\\|")[1];
+                int id = Integer.parseInt(array[0].split(Pattern.quote("|"))[1]);
+                type = array[1].split(Pattern.quote("|"))[1];
                 String commands[];
 
                 //if type equals CheckLife server sends message saying that it's alive
@@ -614,8 +618,8 @@ public class MulticastServer extends Thread {
                 //type login verifies username and password and if it's valid
                 if(type.equals("login")) {
 
-                    String username = array[2].split("\\|")[1];
-                    String password = array[3].split("\\|")[1];
+                    String username = array[2].split(Pattern.quote("|"))[1];
+                    String password = array[3].split(Pattern.quote("|"))[1];
 
                     for (User user: userList) {
                         if(username.equals(user.username) && password.equals(user.password)){
@@ -646,7 +650,7 @@ public class MulticastServer extends Thread {
                 //type for registry for new users
                 else if(type.equals("register")) {
 
-                    User user = new User(array[2].split("\\|")[1], array[3].split("\\|")[1], id);
+                    User user = new User(array[2].split(Pattern.quote("|"))[1], array[3].split(Pattern.quote("|"))[1], id);
                     output = "";
                     int flag = 0;
 
@@ -689,7 +693,7 @@ public class MulticastServer extends Thread {
                 else if(type.equals("urlInsert")) {
 
                     MulticastSocket socket = new MulticastSocket();
-                    String ws = array[2].split("\\|")[1];
+                    String ws = array[2].split(Pattern.quote("|"))[1];
 
                     //recursive counter is set to 0
                     recursiveCounter = 0;
@@ -713,7 +717,7 @@ public class MulticastServer extends Thread {
                 //type termSearch returns 10, or less, websites that mention all terms inserted by user
                 else if(type.equals("termSearch")) {
 
-                    String termsArray[] = (array[2].split("\\|"))[1].split(","); //get array with the terms
+                    String termsArray[] = (array[2].split(Pattern.quote("|")))[1].split(","); //get array with the terms
                     Map<String, ArrayList<String>> containsTerms = new TreeMap<>(); //tree map that will contain key as the terms inserted by user, and value the urls that mention it
 
 
@@ -805,7 +809,7 @@ public class MulticastServer extends Thread {
                 //by reference return all websites that mention said websites
                 else if (type.equals("byReference")) {
 
-                    String ref = (array[2].split("\\|"))[1];
+                    String ref = (array[2].split(Pattern.quote("|")))[1];
                     output = "";
 
                     if(urlMentionsList.get(ref) != null) {
@@ -849,7 +853,7 @@ public class MulticastServer extends Thread {
                 else if (type.equals("adminAccess")) {
                     output = "";
                     int flag = 0;
-                    String user = (array[2].split("\\|"))[1];
+                    String user = (array[2].split(Pattern.quote("|")))[1];
 
                     for (User user1: userList) {
                         if(user.equals(user1.username)) {
