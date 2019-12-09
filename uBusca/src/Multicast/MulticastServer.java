@@ -788,6 +788,7 @@ public class MulticastServer extends Thread {
                     String title;
                     String citation;
 
+                    output += "Number of results: " + listUrls.size() + "\n";
                     int num = 0;
                     for (int i = urlListCounter.size() - 1; i >= 0; i--) {
                         num++;
