@@ -790,13 +790,13 @@ public class MulticastServer extends Thread {
                     String title;
                     String citation;
 
-                    output += "Number of results: " + listUrls.size() + "\n";
+                    output += "Number of results: " + listUrls.size() + " |\n";
                     int num = 0;
                     for (int i = urlListCounter.size() - 1; i >= 0; i--) {
                         num++;
                         title = wsInfo.get(urlListCounter.get(i).getUrl())[0];
                         citation = wsInfo.get(urlListCounter.get(i).getUrl())[1];
-                        output += title + "\n\t" + urlListCounter.get(i).getUrl() + " [Referenced " + urlListCounter.get(i).getCount() + " times]" + "\n\t- " + citation + "\n\n";
+                        output += title + "|\n\t" + urlListCounter.get(i).getUrl() + " [Referenced " + urlListCounter.get(i).getCount() + " times]" + "|\n\t- " + citation + "|\n\n";
                         if(num == 9) {
                             break;
                         }

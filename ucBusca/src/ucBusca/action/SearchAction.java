@@ -7,6 +7,7 @@ import ucBusca.model.UcBuscaBean;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SearchAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
@@ -16,11 +17,13 @@ public class SearchAction extends ActionSupport implements SessionAware {
     @Override
     public String execute() throws Exception {
         String searchResult;
-        ArrayList<String> searchResultList;
+        String searchResultList[];
 
         if (this.search != null) {
             searchResult = this.getUcBuscaBean().getSearchResults(this.search);
-            this.session.put("searchResults", searchResult);
+
+            searchResultList = searchResult.split(Pattern.quote("|"));
+            this.session.put("searchResults", searchResultList);
         }
 
         else {

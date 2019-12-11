@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <html>
@@ -25,7 +26,9 @@
         </c:when>
         <c:otherwise>
             <p>Search Results</p><br>
-            <p>${session.searchResults}.</p>
+            <c:forEach items="${session.searchResults}" var="line">
+                <p>${line}.</p>
+            </c:forEach>
         </c:otherwise>
     </c:choose>
 </body>
