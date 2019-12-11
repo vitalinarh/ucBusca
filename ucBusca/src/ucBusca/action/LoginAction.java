@@ -43,9 +43,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     return LOGIN;
             }
         }
-        else
+        else {
             this.session.put("isLogged", false);
             return LOGIN;
+        }
     }
 
     public void setUsername(String username) {
