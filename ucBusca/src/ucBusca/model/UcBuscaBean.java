@@ -38,4 +38,16 @@ public class UcBuscaBean {
             return -2;
         }
     }
+
+    public String getSearchResults(String search) {
+        try {
+            String searchResults = server.searchWords(search, this.clientId);
+
+            return searchResults;
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
