@@ -321,14 +321,15 @@ public class MulticastServer extends Thread {
 
         //goes through list of users and gets all searches and stores count in wordCounter tree map, key : website url, value: counter
         for(User user: userList) {
-            for(String terms[]: user.searches) {
-                for(String term: terms) {
-                    if(!wordCounter.containsKey(term)) {
-                        wordCounter.put(term, 1);
-                        searchesByOrder.add(term);
+            if (user.searches.size() != 0){
+                for (String terms[] : user.searches) {
+                    for (String term : terms) {
+                        if (!wordCounter.containsKey(term)) {
+                            wordCounter.put(term, 1);
+                            searchesByOrder.add(term);
+                        } else
+                            wordCounter.put(term, wordCounter.get(term) + 1);
                     }
-                    else
-                        wordCounter.put(term, wordCounter.get(term) + 1);
                 }
             }
         }

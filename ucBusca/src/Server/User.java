@@ -27,7 +27,7 @@ public class User implements Serializable {
     /**
      * ArrayList that stores user's searches
      */
-    public ArrayList<String []> searches;
+    public ArrayList<String []> searches = new ArrayList<>();
 
     /**
      * constructor for user
