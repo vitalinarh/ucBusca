@@ -13,7 +13,7 @@
 		<c:when test="${session.isLogged == true}">
 			<p>Welcome, ${session.username}. </p>
 
-			<p><a href="<s:url action="search" />">Search words</a></p>
+			<p><a href="<s:url action="goToSearch" />">Search words</a></p>
 			<p><a href="<s:url action="goToSearchPageRef" />">Search pages connected to specified page</a></p>
 			<p><a href="<s:url action="searchHistory" />">Search history</a></p>
 
@@ -31,7 +31,7 @@
 		<c:otherwise>
 			<p>Welcome, anonymous user.</p>
 
-			<p><a href="<s:url action="search" />">Search words</a></p>
+			<p><a href="<s:url action="goToSearch" />">Search words</a></p>
 			<p><a href="<s:url action="goToRegister" />">Register</a></p>
 			<p><a href="<s:url action="goToLogin" />">Login</a></p>
 		</c:otherwise>
