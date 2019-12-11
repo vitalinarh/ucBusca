@@ -52,4 +52,18 @@ public class UcBuscaBean {
         }
 
     }
+
+    public int getUserAdmined(String userToAdmin){
+        try {
+            int validation = server.adminGiveAdminPrivilege(userToAdmin, clientId);
+
+            return validation;
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+
+            return -2;
+
+        }
+    }
 }

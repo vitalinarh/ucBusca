@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>ucBusca</title>
 </head>
 <body>
 	<h1>Index a URL</h1>
