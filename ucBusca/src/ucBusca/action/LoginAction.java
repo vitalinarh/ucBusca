@@ -27,11 +27,15 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     this.session.put("isLogged", true);
                     this.session.put("isAdmin", false);
 
+                    this.session.put("username", this.username);
+
                     return SUCCESS;
 
                 case (1): //admin user
                     this.session.put("isLogged", true);
                     this.session.put("isAdmin", true);
+
+                    this.session.put("username", this.username);
 
                     return SUCCESS;
 
@@ -42,6 +46,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
         else
             this.session.put("isLogged", false);
             return LOGIN;
+    }
+
+    public void setUsername(String username) {
+        this.username = username; // will you sanitize this input? maybe use a prepared statement?
+    }
+
+    public void setPassword(String password) {
+        this.password = password; // what about this input?
     }
 
     public UcBuscaBean getUcBuscaBean() {

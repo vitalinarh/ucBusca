@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 
 public class UcBuscaBean {
@@ -14,11 +15,11 @@ public class UcBuscaBean {
 
     public UcBuscaBean() {
         try {
-            server = (RMI_S) Naming.lookup("primary");
+            server = (RMI_S) LocateRegistry.getRegistry(7001).lookup("primary"); //Gets the RMIServer's reference
 
-            server.subscribe(clientId);
+            this.clientId = server.subscribe(clientId);
         }
-        catch(NotBoundException | MalformedURLException | RemoteException e) {
+        catch(NotBoundException | RemoteException e) {
             e.printStackTrace(); // what happens *after* we reach this line?
         }
     }
