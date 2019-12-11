@@ -31,6 +31,7 @@ public interface RMI_S extends Remote {
      * @author Rodrigo Martins
      */
     int subscribe(RMI_C client, int clientId) throws RemoteException;
+    int subscribe(int clientId) throws RemoteException;
 
     /**
      * UNFINISHED METHOD.
@@ -43,6 +44,7 @@ public interface RMI_S extends Remote {
      * @throws RemoteException
      */
     int[] login(String username, String password, int clientId, RMI_C client) throws RemoteException;
+    int[] login(String username, String password, int clientId) throws RemoteException;
 
     /**
      * RMI method: receives the credentials of the new user and relays them to the Multicast servers.
