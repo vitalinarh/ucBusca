@@ -18,24 +18,24 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
             switch(loginStatus) {
                 case (-1): //incorrect credentials
-                    this.session.put("isLogged", false);
-                    this.session.put("isAdmin", false);
+                    session.put("isLogged", false);
+                    session.put("isAdmin", false);
 
                     return LOGIN;
 
                 case (0): //standard user
-                    this.session.put("isLogged", true);
-                    this.session.put("isAdmin", false);
+                    session.put("isLogged", true);
+                    session.put("isAdmin", false);
 
-                    this.session.put("username", this.username);
+                    session.put("username", this.username);
 
                     return SUCCESS;
 
                 case (1): //admin user
-                    this.session.put("isLogged", true);
-                    this.session.put("isAdmin", true);
+                    session.put("isLogged", true);
+                    session.put("isAdmin", true);
 
-                    this.session.put("username", this.username);
+                    session.put("username", this.username);
 
                     return SUCCESS;
 
@@ -43,9 +43,10 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     return LOGIN;
             }
         }
-        else
+        else {
             this.session.put("isLogged", false);
             return LOGIN;
+        }
     }
 
     public void setUsername(String username) {

@@ -38,4 +38,18 @@ public class UcBuscaBean {
             return -2;
         }
     }
+
+    public String getURLIndexed(String urlToIndex){
+        try {
+            String response = server.adminIndexUrl(urlToIndex, clientId);
+
+            return response;
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+
+            return "Failed to index url";
+        }
+
+    }
 }
