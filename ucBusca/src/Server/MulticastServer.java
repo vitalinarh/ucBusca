@@ -405,7 +405,8 @@ public class MulticastServer extends Thread {
 
                         // Shall we ignore local links? Otherwise we have to rebuild them for future parsing
                         if (!link.attr("href").startsWith("http")) {
-                            key = ws.concat(key);
+                            //key = ws.concat(key);
+                            continue;
                         }
 
                         //adds to link queue

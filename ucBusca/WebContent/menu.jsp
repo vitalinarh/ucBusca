@@ -13,14 +13,14 @@
 		<c:when test="${session.isLogged == true}">
 			<p>Welcome, ${session.username}. </p>
 
-			<p><a href="<s:url action="goToSearch" />">Search words</a></p>
-			<p><a href="<s:url action="goToSearchPageRef" />">Search pages connected to specified page</a></p>
+			<p><a href="<s:url action="search" />">Search words</a></p>
+			<p><a href="<s:url action="searchPageRef" />">Search pages connected to specified page</a></p>
 			<p><a href="<s:url action="searchHistory" />">Search history</a></p>
 
 			<c:choose>
 				<c:when test="${session.isAdmin == true}">
-					<p><a href="<s:url action="goToIndexURL" />">Index URL</a></p>
-					<p><a href="<s:url action="goToGiveAdminPrivilege" />">Give a user admin privileges</a></p>
+					<p><a href="<s:url action="indexURL" />">Index URL</a></p>
+					<p><a href="<s:url action="giveAdminPrivilege" />">Give a user admin privileges</a></p>
 					<p><a href="<s:url action="adminPage" />">Administration page</a></p>
 				</c:when>
 			</c:choose>
@@ -31,12 +31,11 @@
 		<c:otherwise>
 			<p>Welcome, anonymous user.</p>
 
-			<p><a href="<s:url action="goToSearch" />">Search words</a></p>
-			<p><a href="<s:url action="goToRegister" />">Register</a></p>
-			<p><a href="<s:url action="goToLogin" />">Login</a></p>
+			<p><a href="<s:url action="search" />">Search words</a></p>
+			<p><a href="<s:url action="register" />">Register</a></p>
+			<p><a href="<s:url action="login" />">Login</a></p>
 		</c:otherwise>
 	</c:choose>
 
-	<p><a href="<s:url action="index" />">Start</a></p>
 </body>
 </html>
