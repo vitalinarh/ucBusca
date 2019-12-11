@@ -9,49 +9,55 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
 <struts>
 
-  <!-- devMode equals debug information and reload everything for every request -->
-  <constant name="struts.devMode" value="true" />
-  <constant name="struts.ui.theme" value="simple" />
+    <!-- devMode equals debug information and reload everything for every request -->
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple" />
 
-  <package name="ucBusca" extends="struts-default">
-	
-	<default-action-ref name="menu" />
-	
-	<global-results>
-		<result name="error">/error.jsp</result>
-	</global-results>
+    <package name="ucBusca" extends="struts-default">
 
-	<!-- all exceptions not caught by the application will lead to error.jsp -->
-	<global-exception-mappings>
-		<exception-mapping exception="java.lang.Exception" result="error" />
-	</global-exception-mappings>
+        <default-action-ref name="menu" />
 
-	<!-- 'index' ucBusca.action leads to the view provided by index.jsp -->
-    <action name="menu">
-      <result>/menu.jsp</result>
-    </action>
+        <global-results>
+            <result name="error">/error.jsp</result>
+        </global-results>
 
-    <!-- 'goToLogin' ucBusca.action leads to the view provided by login.jsp -->
-    <action name="goToLogin">
-      <result>/login.jsp</result>
-    </action>
+        <!-- all exceptions not caught by the application will lead to error.jsp -->
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error" />
+        </global-exception-mappings>
 
-    <!-- 'login' action calls 'execute' in 'LoginAction' -->
-    <action name="login" class="ucBusca.action.LoginAction" method="execute">
-      <result name="success">/menu.jsp</result>
-      <result name="login">/login.jsp</result>
-    </action>
+        <!-- 'index' ucBusca.action leads to the view provided by index.jsp -->
+        <action name="menu">
+          <result>/menu.jsp</result>
+        </action>
 
-    <!-- 'logout' action calls 'execute' in 'LogoutAction' -->
-    <action name="logout" class="ucBusca.action.LogoutAction" method="execute">
-        <result name="success">/menu.jsp</result>
-    </action>
+        <!-- 'login' action calls 'execute' in 'LoginAction' -->
+        <action name="login" class="ucBusca.action.LoginAction" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="input">/login.jsp</result>
+            <result name="error">/login.jsp</result>
+            <result name="none">/login.jsp</result>
+        </action>
 
-    <!-- 'search' action calls 'execute' in 'LogoutAction' -->
-    <action name="search" class="ucBusca.action.SearchAction" method="execute">
-        <result name="success">/search.jsp</result>
-    </action>
+        <!-- 'indexURL' action calls 'execute' in 'indexURLAction' -->
+        <action name="indexURL" class="ucBusca.action.IndexURLAction" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="input">/indexURL.jsp</result>
+        </action>
 
-  </package>
+        <!-- 'giveAdminPrivilege' action calls 'execute' in 'giveAdminPrivilegeAction' -->
+        <action name="giveAdminPrivilege" class="ucBusca.action.giveAdminPrivilegeAction" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="input">/giveAdminPrivilege.jsp</result>
+            <result name="error">/giveAdminPrivilege.jsp</result>
+            <result name="none">/giveAdminPrivilege.jsp</result>
+        </action>
+
+        <!-- 'logout' action calls 'execute' in 'giveAdminPrivilegeAction' -->
+        <action name="logout" class="ucBusca.action.LogoutAction" method="execute">
+            <result name="success">/menu.jsp</result>
+        </action>
+
+    </package>
 
 </struts>

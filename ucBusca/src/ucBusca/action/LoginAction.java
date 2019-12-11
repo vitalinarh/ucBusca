@@ -21,7 +21,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     session.put("isLogged", false);
                     session.put("isAdmin", false);
 
-                    return LOGIN;
+                    return NONE;
 
                 case (0): //standard user
                     session.put("isLogged", true);
@@ -40,12 +40,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     return SUCCESS;
 
                 default: //qualquer outra situação
-                    return LOGIN;
+                    return ERROR;
             }
         }
         else {
             this.session.put("isLogged", false);
-            return LOGIN;
+            return INPUT;
         }
     }
 
