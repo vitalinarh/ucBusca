@@ -25,6 +25,8 @@
 				</c:when>
 			</c:choose>
 
+			<p><a href="<s:url action="logout" />">Logout</a></p>
+
 		</c:when>
 		<c:otherwise>
 			<p>Welcome, anonymous user.</p>
