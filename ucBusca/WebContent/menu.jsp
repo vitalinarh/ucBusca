@@ -17,11 +17,14 @@
 			<p><a href="<s:url action="goToSearchPageRef" />">Search pages connected to specified page</a></p>
 			<p><a href="<s:url action="searchHistory" />">Search history</a></p>
 
-			<c:when test="${session.isAdmin == true}">
-				<p><a href="<s:url action="goToIndexURL" />">Index URL</a></p>
-				<p><a href="<s:url action="goToGiveAdminPrivilege" />">Give a user admin privileges</a></p>
-				<p><a href="<s:url action="adminPage" />">Administration page</a></p>
-			</c:when>
+			<c:choose>
+				<c:when test="${session.isAdmin == true}">
+					<p><a href="<s:url action="goToIndexURL" />">Index URL</a></p>
+					<p><a href="<s:url action="goToGiveAdminPrivilege" />">Give a user admin privileges</a></p>
+					<p><a href="<s:url action="adminPage" />">Administration page</a></p>
+				</c:when>
+			</c:choose>
+
 		</c:when>
 		<c:otherwise>
 			<p>Welcome, anonymous user.</p>
