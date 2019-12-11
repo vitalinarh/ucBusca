@@ -37,6 +37,5 @@
 		</c:otherwise>
 	</c:choose>
 
-	<p><a href="<s:url action="index" />">Start</a></p>
 </body>
 </html>

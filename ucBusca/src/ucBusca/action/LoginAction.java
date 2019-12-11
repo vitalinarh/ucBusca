@@ -13,7 +13,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
     @Override
     public String execute() throws Exception {
-        if(this.username != null && !username.equals("")) {
+        if( (this.username != null && !username.equals("")) && (this.password != null && !password.equals("")) ) {
             int loginStatus = this.getUcBuscaBean().getLogin(this.username, this.password);
 
             switch(loginStatus) {

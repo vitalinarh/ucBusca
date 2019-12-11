@@ -78,4 +78,18 @@ public class UcBuscaBean {
         }
 
     }
+
+    public int getRegister(String username, String password){
+        try {
+            int validation = server.register(username, password, this.clientId);
+
+            return validation;
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+
+            return -2;
+        }
+
+    }
 }
