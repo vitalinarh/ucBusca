@@ -57,6 +57,16 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <action name="logout" class="ucBusca.action.LogoutAction" method="execute">
             <result name="success">/menu.jsp</result>
         </action>
+    <!-- 'logout' action calls 'execute' in 'LogoutAction' -->
+    <action name="logout" class="ucBusca.action.LogoutAction" method="execute">
+        <result name="success">/menu.jsp</result>
+    </action>
+
+    <!-- 'search' action calls 'execute' in 'LogoutAction' -->
+    <action name="search" class="ucBusca.action.SearchAction" method="execute">
+        <result name="success">/search.jsp</result>
+        <result name="input">/search.jsp</result>
+    </action>
 
     </package>
 
