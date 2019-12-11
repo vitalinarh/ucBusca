@@ -1,32 +1,68 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vital
-  Date: 11/12/2019
-  Time: 19:13
-  To change this template use File | Settings | File Templates.
---%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-<html>
-<head>
-    <title>Search Results</title>
-</head>
-<body>
-    <s:form action="search" method="get">
-        <s:text name="Search:" />
-        <s:textfield name="search" /><br>
-        <s:submit />
-    </s:form>
-    <c:choose>
-        <c:when test="${empty session.searchResults}">
-            <p>No Results</p>
-        </c:when>
-        <c:otherwise>
-            <p>Search Results</p><br>
-            <p>${session.searchResults}.</p>
-        </c:otherwise>
-    </c:choose>
-</body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The core configuration file for the framework is the default (struts.xml) file
+and should reside on the classpath of the webapp (generally /WEB-INF/classes). -->
+
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <!-- devMode equals debug information and reload everything for every request -->
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple" />
+
+    <package name="ucBusca" extends="struts-default">
+
+        <default-action-ref name="menu" />
+
+        <global-results>
+            <result name="error">/error.jsp</result>
+        </global-results>
+
+        <!-- all exceptions not caught by the application will lead to error.jsp -->
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error" />
+        </global-exception-mappings>
+
+        <!-- 'index' ucBusca.action leads to the view provided by index.jsp -->
+        <action name="menu">
+            <result>/menu.jsp</result>
+        </action>
+
+        <!-- 'login' action calls 'execute' in 'LoginAction' -->
+        <action name="login" class="ucBusca.action.LoginAction" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="input">/login.jsp</result>
+            <result name="error">/login.jsp</result>
+            <result name="none">/login.jsp</result>
+        </action>
+
+        <!-- 'indexURL' action calls 'execute' in 'indexURLAction' -->
+        <action name="indexURL" class="ucBusca.action.IndexURLAction" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="input">/indexURL.jsp</result>
+        </action>
+
+        <!-- 'giveAdminPrivilege' action calls 'execute' in 'giveAdminPrivilegeAction' -->
+        <action name="giveAdminPrivilege" class="ucBusca.action.giveAdminPrivilegeAction" method="execute">
+            <result name="success">/menu.jsp</result>
+            <result name="input">/giveAdminPrivilege.jsp</result>
+            <result name="error">/giveAdminPrivilege.jsp</result>
+            <result name="none">/giveAdminPrivilege.jsp</result>
+        </action>
+
+        <!-- 'logout' action calls 'execute' in 'giveAdminPrivilegeAction' -->
+        <action name="logout" class="ucBusca.action.LogoutAction" method="execute">
+            <result name="success">/menu.jsp</result>
+        </action>
+
+        <!-- 'logout' action calls 'execute' in 'giveAdminPrivilegeAction' -->
+        <action name="search" class="ucBusca.action.SearchAction" method="execute">
+            <result name="success">/search.jsp</result>
+        </action>
+
+    </package>
+
+</struts>

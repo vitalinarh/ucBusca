@@ -31,9 +31,9 @@
 		<c:otherwise>
 			<p>Welcome, anonymous user.</p>
 
-			<p><a href="<s:url action="goToSearch" />">Search words</a></p>
-			<p><a href="<s:url action="goToRegister" />">Register</a></p>
-			<p><a href="<s:url action="goToLogin" />">Login</a></p>
+			<p><a href="<s:url action="search" />">Search words</a></p>
+			<p><a href="<s:url action="register" />">Register</a></p>
+			<p><a href="<s:url action="login" />">Login</a></p>
 		</c:otherwise>
 	</c:choose>
 
