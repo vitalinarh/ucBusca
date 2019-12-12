@@ -104,4 +104,17 @@ public class UcBuscaBean {
         }
 
     }
+
+    public String getSearchHistory(){
+        try {
+            String response = server.getSearchHistory(this.clientId);
+
+            return response;
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
 }

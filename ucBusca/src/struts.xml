@@ -78,6 +78,12 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="none">/register.jsp</result>
         </action>
 
+        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <action name="searchHistory" class="ucBusca.action.SearchHistoryAction" method="execute">
+            <result name="success">/searchHistory.jsp</result>
+            <result name="error">/searchHistory.jsp</result>
+        </action>
+
     </package>
 
 </struts>
