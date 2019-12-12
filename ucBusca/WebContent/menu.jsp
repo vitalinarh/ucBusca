@@ -11,7 +11,7 @@
 <body>
 	<c:choose>
 		<c:when test="${session.isLogged == true}">
-			<p>Welcome, ${session.username}. </p>
+			<h1>Welcome, ${session.username}. </h1>
 
 			<p><a href="<s:url action="search" />">Search words</a></p>
 			<p><a href="<s:url action="searchPages" />">Search pages connected to specified page</a></p>
@@ -29,7 +29,7 @@
 
 		</c:when>
 		<c:otherwise>
-			<p>Welcome, anonymous user.</p>
+			<h1>Welcome, anonymous user.</h1>
 
 			<p><a href="<s:url action="search" />">Search words</a></p>
 			<p><a href="<s:url action="register" />">Register</a></p>

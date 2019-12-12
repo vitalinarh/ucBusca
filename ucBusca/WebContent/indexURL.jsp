@@ -8,6 +8,7 @@
 <title>ucBusca</title>
 </head>
 <body>
+	<p><a href="<s:url action="menu" />">Menu</a></p>
 	<h1>Index a URL</h1>
 	<s:form action="indexURL" method="post">
 		<s:text name="URL:" />

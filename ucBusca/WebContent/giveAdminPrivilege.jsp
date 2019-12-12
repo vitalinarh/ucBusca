@@ -8,6 +8,7 @@
 <title>ucBusca</title>
 </head>
 <body>
+	<p><a href="<s:url action="menu" />">Menu</a></p>
 	<h1>Input a user</h1>
 	<s:form action="giveAdminPrivilege" method="post">
 		<s:text name="User to admin:" />
