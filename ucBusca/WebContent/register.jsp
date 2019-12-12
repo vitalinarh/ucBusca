@@ -8,6 +8,8 @@
 <title>ucBusca</title>
 </head>
 <body>
+	<p><a href="<s:url action="menu" />">Menu</a></p>
+	<h1>Register</h1>
 	<s:form action="register" method="post">
 		<s:text name="Username:" />
 		<s:textfield name="username" /><br>
