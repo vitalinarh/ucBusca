@@ -14,7 +14,7 @@
 			<p>Welcome, ${session.username}. </p>
 
 			<p><a href="<s:url action="search" />">Search words</a></p>
-			<p><a href="<s:url action="searchPageRef" />">Search pages connected to specified page</a></p>
+			<p><a href="<s:url action="searchPages" />">Search pages connected to specified page</a></p>
 			<p><a href="<s:url action="searchHistory" />">Search history</a></p>
 
 			<c:choose>

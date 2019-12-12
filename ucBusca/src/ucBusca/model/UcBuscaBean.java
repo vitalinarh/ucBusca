@@ -51,6 +51,18 @@ public class UcBuscaBean {
         }
     }
 
+    public String getSearchPagesResults(String url) {
+        try {
+            String searchResults = server.searchPagesConnectedToPage(url, this.clientId);
+
+            return searchResults;
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int getUserAdmined(String userToAdmin){
         try {
             int validation = server.adminGiveAdminPrivilege(userToAdmin, clientId);

@@ -21,7 +21,7 @@
         <div class="column">
             <s:form action="search" method="post">
                 <s:text name="Search:" />
-                <s:textfield name="search" /><br>
+                <s:textfield name="search" />
                 <s:submit />
             </s:form>
         </div>
