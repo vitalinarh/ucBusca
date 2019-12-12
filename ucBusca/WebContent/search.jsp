@@ -15,11 +15,23 @@
     <title>Search Results</title>
 </head>
 <body>
-    <s:form action="search" method="post">
-        <s:text name="Search:" />
-        <s:textfield name="search" /><br>
-        <s:submit />
-    </s:form>
+
+    <div class="row">
+
+        <div class="column">
+            <s:form action="search" method="post">
+                <s:text name="Search:" />
+                <s:textfield name="search" /><br>
+                <s:submit />
+            </s:form>
+        </div>
+
+        <div class="column">
+            <p><a href="<s:url action="menu" />">Menu</a></p>
+        </div>
+
+    </div>
+
     <c:choose>
         <c:when test="${empty session.searchResults}">
             <p>No Results</p>
