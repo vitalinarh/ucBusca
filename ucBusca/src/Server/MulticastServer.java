@@ -832,13 +832,13 @@ public class MulticastServer extends Thread {
                 else if (type.equals("userSearches")) {
 
                     output = "";
-                    output += "Search History: \n";
+                    output += "Search History: |\n";
                     int i = 0;
 
                     for (User user: userList) {
                         if (user.getPortId() == id && user.searches != null) {
                             for (String search[]: user.searches) {
-                                output += "\n";
+                                output += "|\n";
                                 for (String term: search) {
                                     output += term;
                                     output += " ";

@@ -12,7 +12,7 @@
          pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-    <title>Search Results</title>
+    <title>Search Pages Results</title>
 </head>
 <body>
 
