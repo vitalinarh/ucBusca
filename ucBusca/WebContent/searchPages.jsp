@@ -12,7 +12,7 @@
          pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-    <title>Search Results</title>
+    <title>Search Pages Results</title>
 </head>
 <body>
 
@@ -33,12 +33,12 @@
 </div>
 
 <c:choose>
-    <c:when test="${empty session.searchResults}">
+    <c:when test="${empty session.searchPagesResults}">
         <p>No Results</p>
     </c:when>
     <c:otherwise>
-        <p> Results</p><br>
-        <c:forEach items="${session.searchResults}" var="line">
+        <p> Results:</p><br>
+        <c:forEach items="${session.searchPagesResults}" var="line">
             <p>${line}.</p>
         </c:forEach>
     </c:otherwise>

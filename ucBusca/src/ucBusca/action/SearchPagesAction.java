@@ -23,7 +23,7 @@ public class SearchPagesAction extends ActionSupport implements SessionAware {
             searchResult = this.getUcBuscaBean().getSearchPagesResults(this.url);
 
             searchResultList = searchResult.split(Pattern.quote("|"));
-            this.session.put("searchResults", searchResultList);
+            this.session.put("searchPagesResults", searchResultList);
         }
 
         else {
