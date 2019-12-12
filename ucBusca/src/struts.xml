@@ -64,6 +64,12 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="input">/search.jsp</result>
         </action>
 
+        <!-- 'search' action calls 'execute' in 'LogoutAction' -->
+        <action name="searchPages" class="ucBusca.action.SearchPagesAction" method="execute">
+            <result name="success">/searchPages.jsp</result>
+            <result name="input">/searchPages.jsp</result>
+        </action>
+
         <!-- 'searchHistory' action calls 'execute' in 'SearchPagesAction' -->
         <action name="searchHistory" class="ucBusca.action.SearchHistoryAction" method="execute">
             <result name="success">/searchHistory.jsp</result>
