@@ -40,7 +40,7 @@
             <p>Search Results</p>
             <p>Number of results: ${session.numResults}</p><br>
             <c:forEach items="${session.searchResults}" var="line">
-                <p style="font-weight: bolder; font-family: Arial; font-size: 24px" >${line.title}.</p>
+                <p style="font-weight: bolder; font-family: Arial; font-size: 22px" >${line.title}.</p>
                 <a href = ${line.url}>${line.url}</a>
                 <p>Referenced ${line.count} times.</p>
                 <p>${line.citation}.</p><br>
