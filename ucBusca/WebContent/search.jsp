@@ -38,8 +38,12 @@
         </c:when>
         <c:otherwise>
             <p>Search Results</p><br>
+            <p>Number of results: ${session.numResults}.</p>
             <c:forEach items="${session.searchResults}" var="line">
-                <p>${line}.</p>
+                <p>${line.title}.</p>
+                <p>${line.url}.</p>
+                <p>Referenced ${line.count} times.</p>
+                <p>${line.citation}.</p><br>
             </c:forEach>
         </c:otherwise>
     </c:choose>
