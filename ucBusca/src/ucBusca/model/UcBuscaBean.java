@@ -8,6 +8,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class UcBuscaBean {
     private RMI_S server;
@@ -107,9 +108,8 @@ public class UcBuscaBean {
 
     public String getSearchHistory(){
         try {
-            String response = server.getSearchHistory(this.clientId);
 
-            return response;
+            return server.getSearchHistory(this.clientId);
 
         } catch (RemoteException e) {
             e.printStackTrace();

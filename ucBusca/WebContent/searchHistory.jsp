@@ -16,9 +16,10 @@
 </head>
 <body>
     <p><a href="<s:url action="menu" />">Menu</a></p>
+    <h1>Your Search History</h1>
     <c:choose>
         <c:when test="${empty session.searchHistory}">
-            <p>No Results</p>
+            <p>No searches have been made</p>
         </c:when>
         <c:otherwise>
             <c:forEach items="${session.searchHistory}" var="line">
