@@ -5,6 +5,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import ucBusca.model.UcBuscaBean;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SearchHistoryAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
@@ -13,12 +14,16 @@ public class SearchHistoryAction extends ActionSupport implements SessionAware {
     @Override
     public String execute() throws Exception {
 
+        String searchHistoryList[];
+
         String searchHistory = this.getUcBuscaBean().getSearchHistory();
+
+        searchHistoryList = searchHistory.split(Pattern.quote("|"));
 
         if(searchHistory == null)
             return ERROR;
 
-        this.session.put("searchHistory", searchHistory);
+        this.session.put("searchHistory", searchHistoryList);
 
         return SUCCESS;
 

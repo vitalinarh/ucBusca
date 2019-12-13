@@ -22,7 +22,7 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${session.searchHistory}" var="line">
-                <p>${line}.</p>
+                <p>${line}</p>
             </c:forEach>
         </c:otherwise>
     </c:choose>

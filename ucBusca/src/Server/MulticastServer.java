@@ -832,7 +832,7 @@ public class MulticastServer extends Thread {
                 else if (type.equals("userSearches")) {
 
                     output = "";
-                    output += "Search History: |\n";
+
                     int i = 0;
 
                     for (User user: userList) {
