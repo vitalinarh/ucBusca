@@ -37,9 +37,9 @@
         <p>No Results</p>
     </c:when>
     <c:otherwise>
-        <p> Results:</p><br>
+        <p> Number of Results: ${session.numberPages}</p><br>
         <c:forEach items="${session.searchPagesResults}" var="line">
-            <p>${line}.</p>
+            <a href = ${line}>${line}</a><br>
         </c:forEach>
     </c:otherwise>
 </c:choose>

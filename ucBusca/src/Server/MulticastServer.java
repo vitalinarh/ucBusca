@@ -816,9 +816,9 @@ public class MulticastServer extends Thread {
                     output = "";
 
                     if(urlMentionsList.get(ref) != null) {
-                        output = "List of websites that mention : " + ref + " (" + urlMentionsList.get(ref).size() + ")";
+                        output += urlMentionsList.get(ref).size();
                         for (int i = 0; i < urlMentionsList.get(ref).size(); i++) {
-                            output += "\n";
+                            output += "|\n";
                             output += urlMentionsList.get(ref).get(i);
                         }
                     }

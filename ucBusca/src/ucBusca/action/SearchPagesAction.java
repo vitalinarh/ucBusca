@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.*;
 
 public class SearchPagesAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
@@ -18,12 +19,17 @@ public class SearchPagesAction extends ActionSupport implements SessionAware {
     public String execute() throws Exception {
         String searchResult;
         String searchResultList[];
+        int numberPages;
 
         if (this.url != null) {
             searchResult = this.getUcBuscaBean().getSearchPagesResults(this.url);
 
             searchResultList = searchResult.split(Pattern.quote("|"));
-            this.session.put("searchPagesResults", searchResultList);
+
+            numberPages = Integer.parseInt(searchResultList[0]);
+
+            this.session.put("searchPagesResults", Arrays.copyOfRange(searchResultList, 1, searchResultList.length - 1));
+            this.session.put("numberPages", numberPages);
         }
 
         else {
