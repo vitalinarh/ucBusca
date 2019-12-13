@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 import ucBusca.model.UcBuscaBean;
 
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -29,7 +30,7 @@ public class SearchHistoryAction extends ActionSupport implements SessionAware {
 
     }
 
-    public UcBuscaBean getUcBuscaBean() {
+    public UcBuscaBean getUcBuscaBean() throws RemoteException {
         if(!session.containsKey("ucBuscaBean"))
             this.setUcBuscaBean(new UcBuscaBean());
         return (UcBuscaBean) session.get("ucBuscaBean");

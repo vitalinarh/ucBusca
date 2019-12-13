@@ -96,24 +96,6 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         return clientId;
     }
 
-    @Override
-    public int subscribe(int clientId) throws RemoteException {
-        //If the client has the default id a new one is given.
-        if(clientId == 0) {
-            int id = 5000; //above 5000 due to port availability.
-
-            //Assures there are now two identical ids.
-            while (this.listClient.containsKey(id))
-                id++;
-
-            System.out.println("Subscribed client number " + id + "!");
-
-            return id;
-        }
-
-        return clientId;
-    }
-
     /**
      * RMI method: logs the user and gives him his definitive ID.
      *
@@ -165,62 +147,6 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
 
                 //Check wether or not the user has any pending notifications.
                 this.checkNotifications(idStatus[0], client);
-
-                //return an int for validation.
-                return idStatus;
-
-            case("incorrect"): //If the client entered the wrong credentials
-
-            default:
-                idStatus = new int[2];
-                idStatus[0] = 0;
-                idStatus[1] = -1;
-
-                return idStatus;
-        }
-    }
-
-    @Override
-    public int[] login(String username, String password, int clientId) throws RemoteException {
-        String command = "id | " + clientId + " ; type | login ; username | " + username + " ; password | " + password + "";
-
-        //Sends the Multicast server the protocol and waits for its response.
-        String response = sendToGroup(command, clientId);
-
-        String [] newResponse = response.split("[ |;]+");
-
-        int [] idStatus;
-
-        switch(newResponse[newResponse.length - 1]){
-
-            case("Admin"): //If the client is an admin
-
-                //Getting the definitive id and the validation int.
-                idStatus = new int[2];
-                idStatus[0] = Integer.parseInt(newResponse[7]);
-                idStatus[1] = 1;
-
-                //Uppdate the user's interface
-                //this.listClient.put( (Integer) Integer.parseInt(newResponse[7]), client);
-
-                //Check wether or not the user has any pending notifications.
-                //this.checkNotifications(idStatus[0], client);
-
-                //return an int for validation.
-                return idStatus;
-
-            case("User"): //If the client is an user
-
-                //Getting the definitive id and the validation int.
-                idStatus = new int[2];
-                idStatus[0] = Integer.parseInt(newResponse[7]);
-                idStatus[1] = 0;
-
-                //Uppdate the user's interface
-                //this.listClient.put( (Integer) Integer.parseInt(newResponse[7]), client);
-
-                //Check wether or not the user has any pending notifications.
-                //this.checkNotifications(idStatus[0], client);
 
                 //return an int for validation.
                 return idStatus;

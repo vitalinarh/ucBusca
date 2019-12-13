@@ -7,18 +7,21 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class UcBuscaBean {
+public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     private RMI_S server;
     private int clientId = 0;
 
-    public UcBuscaBean() {
+    public UcBuscaBean() throws RemoteException {
+        super();
         try {
+
             server = (RMI_S) LocateRegistry.getRegistry(7001).lookup("primary"); //Gets the RMIServer's reference
 
-            this.clientId = server.subscribe(clientId);
+            this.clientId = server.subscribe(this, clientId);
         }
         catch(NotBoundException | RemoteException e) {
             e.printStackTrace(); // what happens *after* we reach this line?
@@ -27,7 +30,7 @@ public class UcBuscaBean {
 
     public int getLogin(String username, String password){
         try {
-            int [] loginStatus = server.login(username, password, this.clientId);
+            int [] loginStatus = server.login(username, password, this.clientId, this);
 
             this.clientId = loginStatus[0];
 
@@ -116,5 +119,15 @@ public class UcBuscaBean {
 
             return null;
         }
+    }
+
+    @Override
+    public String sendToClient(ArrayList<String> message) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public String sendToClient(String message) throws RemoteException {
+        return null;
     }
 }

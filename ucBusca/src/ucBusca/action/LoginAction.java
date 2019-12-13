@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 import ucBusca.model.UcBuscaBean;
 
+import java.rmi.RemoteException;
 import java.util.Map;
 
 public class LoginAction extends ActionSupport implements SessionAware {
@@ -57,7 +58,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.password = password; // what about this input?
     }
 
-    public UcBuscaBean getUcBuscaBean() {
+    public UcBuscaBean getUcBuscaBean() throws RemoteException {
         if(!session.containsKey("ucBuscaBean"))
             this.setUcBuscaBean(new UcBuscaBean());
         return (UcBuscaBean) session.get("ucBuscaBean");

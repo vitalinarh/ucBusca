@@ -6,6 +6,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import ucBusca.model.UcBuscaBean;
 
 import java.lang.reflect.Array;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -58,7 +59,7 @@ public class SearchAction extends ActionSupport implements SessionAware {
         this.search = search; // will you sanitize this input? maybe use a prepared statement?
     }
 
-    public UcBuscaBean getUcBuscaBean() {
+    public UcBuscaBean getUcBuscaBean() throws RemoteException {
         if(!session.containsKey("ucBuscaBean"))
             this.setUcBuscaBean(new UcBuscaBean());
         return (UcBuscaBean) session.get("ucBuscaBean");
