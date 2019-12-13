@@ -37,11 +37,11 @@
             <p>No Results</p>
         </c:when>
         <c:otherwise>
-            <p>Search Results</p><br>
-            <p>Number of results: ${session.numResults}.</p>
+            <p>Search Results</p>
+            <p>Number of results: ${session.numResults}</p><br>
             <c:forEach items="${session.searchResults}" var="line">
                 <p>${line.title}.</p>
-                <p>${line.url}.</p>
+                <a href = ${line.url}>${line.url}</a>
                 <p>Referenced ${line.count} times.</p>
                 <p>${line.citation}.</p><br>
             </c:forEach>
