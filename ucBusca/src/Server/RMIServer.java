@@ -1,5 +1,10 @@
 package Server;
 
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.*;
+import com.github.scribejava.core.oauth.OAuthService;
+import uc.sd.apis.FacebookApi2;
+
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.DatagramPacket;
@@ -10,10 +15,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -27,6 +29,8 @@ import static java.lang.Thread.sleep;
  */
 public class RMIServer extends UnicastRemoteObject implements RMI_S {
     private static final long serialVersionUID = 1L;
+
+    OAuthService service;
 
     /**
      * Treemap with the client ids and their respective interface.
@@ -318,6 +322,62 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
     public String adminGetAdminPage(int clientId) throws RemoteException {
         //todo: this isn't done yet
         return null;
+    }
+
+    public String facebookAuth() throws RemoteException {
+
+        String NETWORK_NAME = "Facebook";
+        String PROTECTED_RESOURCE_URL = "https://graph.facebook.com/me";
+        Token EMPTY_TOKEN = null;
+
+        // Replace these with your own api key and secret
+        String apiKey = "2592229557523032";
+        String apiSecret = "867b0cf29c9e909f0a05a2c7b151b738";
+
+        OAuthService service = new ServiceBuilder()
+                .provider(FacebookApi2.class)
+                .apiKey(apiKey)
+                .apiSecret(apiSecret)
+                .callback("http://localhost:8081/ucBusca/faceauth2.action") // Do not change this.
+                .scope("public_profile")
+                .build();
+
+        System.out.println("-----" + NETWORK_NAME + "---------");
+        this.service = service;
+
+        String authorizationUrl = service.getAuthorizationUrl(EMPTY_TOKEN);
+
+        System.out.println(authorizationUrl);
+
+        return authorizationUrl;
+    }
+
+    public String verifyToken(String code) {
+
+        Verifier verifier = new Verifier(code);
+        String PROTECTED_RESOURCE_URL = "https://graph.facebook.com/me";
+        Token EMPTY_TOKEN = null;
+
+        // Trade the Request Token and Verfier for the Access Token
+        System.out.println("Trading the Request Token for an Access Token...");
+        Token accessToken = this.service.getAccessToken(EMPTY_TOKEN, verifier);
+        System.out.println("Got the Access Token!");
+        System.out.println("(if your curious it looks like this: " + accessToken + " )");
+        System.out.println();
+
+        // Now let's go and ask for a protected resource!
+        System.out.println("Now we're going to access a protected resource...");
+        OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL, this.service);
+        service.signRequest(accessToken, request);
+        Response response = request.send();
+        System.out.println("Got it! Lets see what we found...");
+        System.out.println();
+        System.out.println(response.getCode());
+        System.out.println(response.getBody());
+
+        String data = response.getBody();
+
+        return data;
     }
 
     /**

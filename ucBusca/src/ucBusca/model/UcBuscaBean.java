@@ -1,6 +1,7 @@
 package ucBusca.model;
 
 import Server.*;
+import com.github.scribejava.core.model.Response;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -119,6 +120,24 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
 
             return null;
         }
+    }
+
+    public String getFacebookAuth(){
+        try{
+            return server.facebookAuth();
+
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public String getFacebookAuth2(String auth_url) throws RemoteException {
+
+        return server.verifyToken(auth_url);
+
     }
 
     @Override

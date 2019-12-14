@@ -1,5 +1,7 @@
 package Server;
 
+import com.github.scribejava.core.model.Response;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -126,4 +128,16 @@ public interface RMI_S extends Remote {
      * @author Rodrigo Martins
      */
     int adminGiveAdminPrivilege(String username, int clientId) throws RemoteException;
+
+    /**
+     * RMI method: facebook authentication.
+     *
+     * @return returns a String for validation.
+     * @throws RemoteException caught outside of scope.
+     *
+     * @author Rodrigo Martins
+     */
+    String facebookAuth() throws RemoteException;
+
+    String verifyToken(String url) throws RemoteException;
 }

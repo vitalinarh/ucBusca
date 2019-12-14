@@ -34,6 +34,7 @@
 			<p><a href="<s:url action="search" />">Search words</a></p>
 			<p><a href="<s:url action="register" />">Register</a></p>
 			<p><a href="<s:url action="login" />">Login</a></p>
+            <p><a href="<s:url action="face_auth" />">Authenticate with Facebook</a></p>
 		</c:otherwise>
 	</c:choose>
 
