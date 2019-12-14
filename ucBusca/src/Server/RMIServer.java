@@ -179,12 +179,15 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         //Check if the user has any notifications pending
         ArrayList<String> notifications;
 
+        String response = null;
+
         //Sends them to the client
         if( (notifications = this.notificationBoard.get(clientId)) != null)
-            client.sendToClient(notifications);
+            response = client.sendToClient(notifications);
 
         //Removes the now sent notifications from the board
-        this.notificationBoard.put(clientId, null);
+        if(response != null)
+            this.notificationBoard.put(clientId, null);
     }
 
     /**
@@ -410,6 +413,20 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         }
     }
 
+    @Override
+    public ArrayList<String> checkNotification(int clientId) throws RemoteException {
+        //Check if the user has any notifications pending
+        ArrayList<String> notifications;
+
+        //Sends them to the client
+        if( (notifications = this.notificationBoard.get(clientId)) != null){
+            this.notificationBoard.put(clientId, null);
+            return notifications;
+        }
+
+        return null;
+    }
+
     //==============================================================
 
     /**
@@ -628,6 +645,21 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
 
                                 String response = client.sendToClient(newNotification); //Tries relay the notification to the user
 
+                                if(response.equals("WebSocketOffline")){
+                                    ArrayList<String> clientNotifs;
+
+                                    //We get, or create, a ArrayList<String> to keep the notification in the notification board
+                                    if(this.notificationBoard.containsKey(clientId) && this.notificationBoard.get(clientId) != null) {
+                                        clientNotifs = this.notificationBoard.get(clientId);
+                                    } else {
+                                        clientNotifs =  new ArrayList<>();
+                                    }
+
+                                    //The notification is added to the board.
+                                    clientNotifs.add(newNotification);
+                                    this.notificationBoard.put(clientId, clientNotifs);
+                                }
+
                             } catch (RemoteException e){ //If the suer was offline
 
                                 ArrayList<String> clientNotifs;
@@ -659,6 +691,21 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                             try {
 
                                 String response = client.sendToClient(newNotification); //We attempt to send the notification
+
+                                if(response.equals("WebSocketOffline")){
+                                    ArrayList<String> clientNotifs;
+
+                                    //We get, or create, a ArrayList<String> to keep the notification in the notification board
+                                    if(this.notificationBoard.containsKey(clientId) && this.notificationBoard.get(clientId) != null) {
+                                        clientNotifs = this.notificationBoard.get(clientId);
+                                    } else {
+                                        clientNotifs =  new ArrayList<>();
+                                    }
+
+                                    //The notification is added to the board.
+                                    clientNotifs.add(newNotification);
+                                    this.notificationBoard.put(clientId, clientNotifs);
+                                }
 
                             } catch (RemoteException e){ //If the user is offline
 

@@ -3,6 +3,7 @@ package ucBusca.model;
 import Server.*;
 import com.github.scribejava.core.model.Response;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -12,9 +13,12 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import ucBusca.ws.WebSocketAnnotation;
+
 public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     private RMI_S server;
     private int clientId = 0;
+    private String username = null;
 
     public UcBuscaBean() throws RemoteException {
         super();
@@ -42,6 +46,14 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
 
             return -2;
         }
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public int getClientId(){
+        return this.clientId;
     }
 
     public String getSearchResults(String search) {
@@ -141,12 +153,30 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     }
 
     @Override
-    public String sendToClient(ArrayList<String> message) throws RemoteException {
-        return null;
-    }
+    public String sendToClient(ArrayList<String> message) { return null; }
 
     @Override
     public String sendToClient(String message) throws RemoteException {
-        return null;
+        if(WebSocketAnnotation.userIDs.contains(this.clientId)){
+            int index = 0;
+            for(Integer userID:WebSocketAnnotation.userIDs) {
+                if (userID == this.clientId)
+                    break;
+
+                index++;
+            }
+
+            WebSocketAnnotation ws = (WebSocketAnnotation) WebSocketAnnotation.users.toArray()[index];
+
+            try {
+                ws.session.getBasicRemote().sendText(message);
+
+                return "Notification Sent";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "WebSocketOffline";
     }
 }

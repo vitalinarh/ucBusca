@@ -16,6 +16,7 @@ public class LogoutAction extends ActionSupport implements SessionAware {
 
         this.session.put("isLogged", false);
         this.session.put("isAdmin", false);
+        this.session.put("userId", 0);
         this.session.put("searchHistory", null);
         this.session.put("searchResults", null);
 
