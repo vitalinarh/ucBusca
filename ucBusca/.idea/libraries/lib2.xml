@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lib2">
+    <CLASSES>
+      <root url="file://C:/TOM-CAT_HOME/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://C:/TOM-CAT_HOME/lib" recursive="false" />
+  </library>
+</component>

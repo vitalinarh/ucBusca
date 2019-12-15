@@ -24,6 +24,11 @@ public class Page {
      */
     public int count;
 
+    /**
+     * language
+     */
+    public String language;
+
     public int getCount() {
         return count;
     }
@@ -32,15 +37,24 @@ public class Page {
         this.count = count;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     /**
      * constructor
      * @param url
      */
-    public Page(String url, String citation, String title, int count) {
+    public Page(String url, String citation, String title, int count, String language) {
         this.url = url;
         this.citation = citation;
         this.title = title;
         this.count = count;
+        this.language = language;
     }
 
     /**

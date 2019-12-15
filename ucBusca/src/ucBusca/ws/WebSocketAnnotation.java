@@ -19,7 +19,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnError;
 import javax.websocket.Session;
 
-@ServerEndpoint(value = "/ws")
+@ServerEndpoint(value = "/wss")
 public class WebSocketAnnotation {
     public Session session;
     public static final Set<Integer> userIDs = new CopyOnWriteArraySet<>();

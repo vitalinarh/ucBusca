@@ -396,7 +396,6 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
     public String yandexLangDetector(String text) {
 
         try {
-            System.out.println(text);
             String link = "https://translate.yandex.net/api/v1.5/tr/detect?key=trnsl.1.1.20191214T152639Z.763aac1b6a3b7865.b01c2b569456e48f6058fd02c10d4f1dd7c84c3f&text=" + java.net.URLEncoder.encode(text, "UTF-8").replaceAll("\\+", "%20");
 
             URL url = new URL(link);
@@ -422,9 +421,9 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
             }
 
             String lang = sb.toString().split("lang=")[1].substring(1,3);
-
             System.out.println(lang);
             return lang;
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;

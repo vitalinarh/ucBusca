@@ -3,6 +3,7 @@ package ucBusca.model;
 import Server.*;
 import com.github.scribejava.core.model.Response;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -12,6 +13,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
+import ucBusca.ws.WebSocketAnnotation;
+
 //todo:yandex imports
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +24,9 @@ import java.util.List;
 public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     private RMI_S server;
     private int clientId = 0;
+    private String username = null;
+    private boolean isOnAdminPage;
+    private AdminPageUpdaterThread aput;
 
     public UcBuscaBean() throws RemoteException {
         super();
@@ -141,9 +148,9 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
 
     public String getLanguage(String text){
         try {
-            System.out.println(text);
-            server.yandexLangDetector(text);
-            return null;
+
+            return server.yandexLangDetector(text);
+
         } catch (RemoteException e) {
 
             e.printStackTrace();
@@ -157,13 +164,92 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
 
     }
 
-    @Override
-    public String sendToClient(ArrayList<String> message) throws RemoteException {
-        return null;
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void getAdminPage(){
+        this.isOnAdminPage = true;
+        this.aput = new AdminPageUpdaterThread();
+    }
+
+    public void setIsOnAdminPage() throws InterruptedException {
+        this.isOnAdminPage = false;
+        this.aput.join();
     }
 
     @Override
+    public String sendToClient(ArrayList<String> message) { return null; }
+
+    @Override
     public String sendToClient(String message) throws RemoteException {
-        return null;
+        if(WebSocketAnnotation.userIDs.contains(this.clientId)){
+            int index = 0;
+            for(Integer userID:WebSocketAnnotation.userIDs) {
+                if (userID == this.clientId)
+                    break;
+
+                index++;
+            }
+
+            WebSocketAnnotation ws = (WebSocketAnnotation) WebSocketAnnotation.users.toArray()[index];
+
+            try {
+                ws.session.getBasicRemote().sendText(message);
+
+                return "Notification Sent";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "WebSocketOffline";
+    }
+
+    public class AdminPageUpdaterThread extends Thread{
+        private String lastMostSearchedWords = null;
+        private String lastMostSearchedPages = null;
+
+
+        public AdminPageUpdaterThread(){
+            super();
+            this.start();
+        }
+
+        public void run() {
+            while(isOnAdminPage){
+
+                try {
+                    ArrayList<String> statistics = server.adminGetAdminPage(clientId);
+
+
+
+                    if (WebSocketAnnotation.userIDs.contains(clientId)) {
+                        int index = 0;
+                        for (Integer userID : WebSocketAnnotation.userIDs) {
+                            if (userID == clientId)
+                                break;
+
+                            index++;
+                        }
+
+                        WebSocketAnnotation ws = (WebSocketAnnotation) WebSocketAnnotation.users.toArray()[index];
+
+                        for(String statistic:statistics){
+                            if(!statistic.equals(this.lastMostSearchedPages) && !statistic.equals(this.lastMostSearchedWords))
+                                ws.session.getBasicRemote().sendText("Statistics!" + statistic.split(Pattern.quote("|"))[1]);
+                        }
+                    }
+
+                    sleep(10000);
+
+
+                } catch (IOException | InterruptedException e) { e.printStackTrace(); }
+            }
+        }
+    }
+
+    public int getClientId(){
+        return this.clientId;
     }
 }

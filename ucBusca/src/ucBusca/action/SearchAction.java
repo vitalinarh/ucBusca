@@ -31,24 +31,20 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
             numResults = Integer.parseInt(searchResultList[0]);
 
-            System.out.println(searchResult);
 
-            while(i + 7 <= searchResultList.length) {
-                System.out.println(searchResultList[i]);
+            while(i + 3 <= searchResultList.length) {
+
                 title = searchResultList[i];
                 i++;
-                System.out.println(searchResultList[i]);
                 url = searchResultList[i];
                 i++;
-                System.out.println(searchResultList[i]);
                 numReferences = Integer.parseInt(searchResultList[i]);
                 i++;
-                System.out.println(searchResultList[i]);
                 citation = searchResultList[i];
-                String lang = this.getUcBuscaBean().getLanguage(citation);
+                String lang = getUcBuscaBean().getLanguage(citation);
                 i++;
-                System.out.println(searchResultList[i]);
-                Page newPage = new Page(url, citation, title, numReferences);
+                System.out.println(lang);
+                Page newPage = new Page(url, citation, title, numReferences, lang);
                 pagesList.add(newPage);
             }
 

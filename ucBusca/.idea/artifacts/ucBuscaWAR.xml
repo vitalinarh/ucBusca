@@ -9,7 +9,14 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="jsoup-1.12.1" />
           <element id="library" level="project" name="lib" />
-          <element id="library" level="project" name="lib1" />
+          <element id="library" level="project" name="lib2" />
+          <element id="library" level="project" name="json_simple-1.1" />
+          <element id="library" level="project" name="slf4j-api-1.7.13" />
+          <element id="library" level="project" name="retrofit-2.1.0" />
+          <element id="library" level="project" name="javax.ws.rs-api-2.0.1" />
+          <element id="library" level="project" name="jackson-jaxrs-base-2.5.4" />
+          <element id="library" level="project" name="jackson-annotations-2.5.4" />
+          <element id="library" level="project" name="async-http-client-1.9.31" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="ucBusca/web/Web" />
