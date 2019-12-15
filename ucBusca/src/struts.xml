@@ -102,6 +102,16 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="error">/searchHistory.jsp</result>
         </action>
 
+        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <action name="adminPage" class="ucBusca.action.AdminPageAction" method="execute">
+            <result name="success">/adminPage.jsp</result>
+        </action>
+
+        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <action name="menuFromAdminPage" class="ucBusca.action.LeaveAdminPageAction" method="execute">
+            <result name="success">/menu.jsp</result>
+        </action>
+
     </package>
 
 </struts>

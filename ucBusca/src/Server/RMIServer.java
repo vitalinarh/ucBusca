@@ -16,6 +16,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static java.lang.Thread.sleep;
 
@@ -322,9 +323,20 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
      * @throws RemoteException
      */
     @Override
-    public String adminGetAdminPage(int clientId) throws RemoteException {
+    public ArrayList<String> adminGetAdminPage(int clientId) throws RemoteException {
         //todo: this isn't done yet
-        return null;
+
+        String command;
+
+        command = "id | " + clientId + " ; type | adminPage ; serverId | " + 2  + "";
+
+        String response = sendToGroup(command, clientId);
+
+        ArrayList<String> statistics = new ArrayList<>();
+        statistics.add(response.split(Pattern.quote(";"))[response.split(Pattern.quote(";")).length - 2]);
+        statistics.add(response.split(Pattern.quote(";"))[response.split(Pattern.quote(";")).length - 1]);
+        
+        return statistics;
     }
 
     public String facebookAuth() throws RemoteException {

@@ -79,7 +79,7 @@
 						<a href="<s:url action="searchHistory"/>">Search history</a>
 						<a href="<s:url action="indexURL"/>">ADMIN: index a url</a>
 						<a href="<s:url action="giveAdminPrivilege"/>">ADMIN: Give admin privileges</a>
-						<a href="<s:url action="adminPage"/>">ADMIN: Give admin privileges</a>
+						<a href="<s:url action="adminPage"/>">ADMIN: Admin Page</a>
 						<a href="<s:url action="logout"/>">Logout</a>
 					</div>
 

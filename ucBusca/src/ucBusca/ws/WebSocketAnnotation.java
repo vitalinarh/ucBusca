@@ -53,6 +53,12 @@ public class WebSocketAnnotation {
     @OnMessage
     public void receiveMessage(String message) {
         if(message != null && !message.equals("")){
+
+            if(message.startsWith("Statistics")){
+                this.sendMessage(message);
+                return;
+            }
+
             this.userIDs.add(Integer.parseInt(message));
             this.userID = Integer.parseInt(message);
             this.users.add(this);

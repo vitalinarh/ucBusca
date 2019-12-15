@@ -352,12 +352,12 @@ public class RMIClient extends UnicastRemoteObject implements RMI_C {
      * @author Rodrigo Martins
      */
     private void showAdminPage(Scanner scan, int clientId, RMI_S server) throws RemoteException{
-        System.out.println("Entering administration page...");
+        /*System.out.println("Entering administration page...");
         String response = server.adminGetAdminPage(clientId);
 
         System.out.println(response);
 
-        System.out.println("Press enter to proceed...");
+        System.out.println("Press enter to proceed...");*/
         scan.nextLine();
     }
 

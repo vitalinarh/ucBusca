@@ -116,7 +116,7 @@ public interface RMI_S extends Remote {
      * @return
      * @throws RemoteException
      */
-    String adminGetAdminPage(int clientId) throws RemoteException;
+    ArrayList<String> adminGetAdminPage(int clientId) throws RemoteException;
 
     /**
      * RMI method: grants the desired user admin privileges.

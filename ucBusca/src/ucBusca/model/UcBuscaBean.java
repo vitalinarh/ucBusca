@@ -19,6 +19,8 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     private RMI_S server;
     private int clientId = 0;
     private String username = null;
+    private boolean isOnAdminPage;
+    private AdminPageUpdaterThread aput;
 
     public UcBuscaBean() throws RemoteException {
         super();
@@ -152,6 +154,16 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
 
     }
 
+    public void getAdminPage(){
+        this.isOnAdminPage = true;
+        this.aput = new AdminPageUpdaterThread();
+    }
+
+    public void setIsOnAdminPage() throws InterruptedException {
+        this.isOnAdminPage = false;
+        this.aput.join();
+    }
+
     @Override
     public String sendToClient(ArrayList<String> message) { return null; }
 
@@ -178,5 +190,49 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
         }
 
         return "WebSocketOffline";
+    }
+
+
+    public class AdminPageUpdaterThread extends Thread{
+        private String lastMostSearchedWords = null;
+        private String lastMostSearchedPages = null;
+
+
+        public AdminPageUpdaterThread(){
+            super();
+            this.start();
+        }
+
+        public void run() {
+            while(isOnAdminPage){
+
+                try {
+                    ArrayList<String> statistics = server.adminGetAdminPage(clientId);
+
+
+
+                    if (WebSocketAnnotation.userIDs.contains(clientId)) {
+                        int index = 0;
+                        for (Integer userID : WebSocketAnnotation.userIDs) {
+                            if (userID == clientId)
+                                break;
+
+                            index++;
+                        }
+
+                        WebSocketAnnotation ws = (WebSocketAnnotation) WebSocketAnnotation.users.toArray()[index];
+
+                        for(String statistic:statistics){
+                            if(!statistic.equals(this.lastMostSearchedPages) && !statistic.equals(this.lastMostSearchedWords))
+                            ws.session.getBasicRemote().sendText("Statistics!" + statistic.split(Pattern.quote("|"))[1]);
+                        }
+                    }
+
+                    sleep(10000);
+
+
+                } catch (IOException | InterruptedException e) { e.printStackTrace(); }
+            }
+        }
     }
 }
