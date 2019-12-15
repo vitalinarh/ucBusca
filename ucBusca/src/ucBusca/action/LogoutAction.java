@@ -6,11 +6,26 @@ import ucBusca.model.UcBuscaBean;
 
 import java.util.Map;
 
+/**
+ * Class that's responsible for logging out the user.
+ * To do that, it updates all the session variables to reflect an anonymous user.
+ */
 public class LogoutAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
+    /**
+     * User's session.
+     */
     private Map<String, Object> session;
+    /**
+     * User's credentials.
+     */
     private String username = null, password = null;
 
+    /**
+     * Execute: Updates all the session variables to reflect an anonymous user.
+     * @return String
+     * @throws Exception
+     */
     @Override
     public String execute() throws Exception {
 
@@ -27,6 +42,10 @@ public class LogoutAction extends ActionSupport implements SessionAware {
 
     }
 
+    /**
+     * Sets the user's session.
+     * @param session
+     */
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;

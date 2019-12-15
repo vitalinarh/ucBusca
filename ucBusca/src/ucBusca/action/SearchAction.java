@@ -9,10 +9,20 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-
+/**
+ * Class responsible for relaying to the bean the search query given by the user.
+ * It parses the bean's response and builds Page objects to hold the results' information.
+ *
+ */
 public class SearchAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
+    /**
+     * User's session.
+     */
     private Map<String, Object> session;
+    /**
+     * Search query given by the user.
+     */
     private String search = null;
     private static final String SAMPLE_KEY = "trnsl.1.1.20191214T152639Z.763aac1b6a3b7865.b01c2b569456e48f6058fd02c10d4f1dd7c84c3f";
     private ArrayList<Page> pagesList = new ArrayList<>();

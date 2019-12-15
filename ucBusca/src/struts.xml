@@ -27,7 +27,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <exception-mapping exception="java.lang.Exception" result="error" />
         </global-exception-mappings>
 
-        <!-- 'index' ucBusca.action leads to the view provided by index.jsp -->
+        <!-- 'menu' ucBusca.action leads to the view provided by menu.jsp -->
         <action name="menu">
           <result>/menu.jsp</result>
         </action>
@@ -77,19 +77,19 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="success">/menu.jsp</result>
         </action>
 
-        <!-- 'search' action calls 'execute' in 'LogoutAction' -->
+        <!-- 'search' action calls 'execute' in 'SearchAction' -->
         <action name="search" class="ucBusca.action.SearchAction" method="execute">
             <result name="success">/search.jsp</result>
             <result name="input">/search.jsp</result>
         </action>
 
-        <!-- 'search' action calls 'execute' in 'LogoutAction' -->
+        <!-- 'searchPages' action calls 'execute' in 'SearchPagesAction' -->
         <action name="searchPages" class="ucBusca.action.SearchPagesAction" method="execute">
             <result name="success">/searchPages.jsp</result>
             <result name="input">/searchPages.jsp</result>
         </action>
 
-        <!-- 'searchHistory' action calls 'execute' in 'SearchPagesAction' -->
+        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
         <action name="searchHistory" class="ucBusca.action.SearchHistoryAction" method="execute">
             <result name="success">/searchHistory.jsp</result>
             <result name="input">/searchHistory.jsp</result>
@@ -109,12 +109,12 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="error">/searchHistory.jsp</result>
         </action>
 
-        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <!-- 'adminPage' action calls 'execute' in 'AdminPageAction' -->
         <action name="adminPage" class="ucBusca.action.AdminPageAction" method="execute">
             <result name="success">/adminPage.jsp</result>
         </action>
 
-        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <!-- 'menuFromAdminPage' action calls 'execute' in 'LeaveAdminPageAction' -->
         <action name="menuFromAdminPage" class="ucBusca.action.LeaveAdminPageAction" method="execute">
             <result name="success">/menu.jsp</result>
         </action>

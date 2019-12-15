@@ -17,6 +17,7 @@
           <element id="library" level="project" name="jackson-jaxrs-base-2.5.4" />
           <element id="library" level="project" name="jackson-annotations-2.5.4" />
           <element id="library" level="project" name="async-http-client-1.9.31" />
+          <element id="library" level="project" name="lib1" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="ucBusca/web/Web" />
