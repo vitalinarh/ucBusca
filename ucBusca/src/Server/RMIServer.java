@@ -351,16 +351,13 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                 .provider(FacebookApi2.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
-                .callback("https://ucBusca.vita.rodrigo:8443/ucBusca/faceauth2.action") // Do not change this.
+                .callback("https://ucBusca.vita.rodrigo:8443/ucBuscaWAR/faceauth2.action") // Do not change this.
                 .scope("public_profile")
                 .build();
 
-        System.out.println("-----" + NETWORK_NAME + "---------");
         this.service = service;
 
         String authorizationUrl = service.getAuthorizationUrl(EMPTY_TOKEN);
-
-        System.out.println(authorizationUrl);
 
         return authorizationUrl;
     }
@@ -466,7 +463,8 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
             }
 
             String translation = sb.toString().split("text")[1];
-            translation = translation.substring(7, translation.length() - 3);
+            System.out.println(translation);
+            translation = translation.substring(4, translation.length() - 3);
 
             return translation;
 

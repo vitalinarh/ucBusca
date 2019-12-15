@@ -24,10 +24,31 @@ public class User implements Serializable {
      * port id for RMI client
      */
     public int portId;
+
+    public String getFacebookName() {
+        return facebookName;
+    }
+
+    public void setFacebookName(String facebookName) {
+        this.facebookName = facebookName;
+    }
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
     /**
      * ArrayList that stores user's searches
      */
     public ArrayList<String []> searches = new ArrayList<>();
+
+    public String facebookName;
+
+    public String facebookId;
 
     /**
      * constructor for user

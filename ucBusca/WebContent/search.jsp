@@ -56,14 +56,17 @@
 
                 <p>Number of results: ${session.numResults}</p><br>
                 <c:forEach items="${session.searchResults}" var="line">
-                    <p style="font-weight: bolder; font-family: Arial; font-size: 22px" >${line.title}.</p>
-                    <p>Original Language ${line.language}.</p>
-                    <a href = ${line.url}>${line.url}</a>
                     <c:choose>
                         <c:when test="${session.translate == 'false'}">
+                            <p style="font-weight: bolder; font-family: Arial; font-size: 22px" >${line.title}.</p>
+                            <p>Original Language ${line.language}.</p>
+                            <a href = ${line.url}>${line.url}</a>
                             <p>${line.citation}.</p><br>
                         </c:when>
                         <c:otherwise>
+                            <p style="font-weight: bolder; font-family: Arial; font-size: 22px" >${line.title_translation}.</p>
+                            <p>Original Language ${line.language}.</p>
+                            <a href = ${line.url}>${line.url}</a>
                             <p>Translation To Portuguese: ${line.translation}.</p>
                         </c:otherwise>
                     </c:choose>

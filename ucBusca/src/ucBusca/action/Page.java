@@ -31,6 +31,8 @@ public class Page {
 
     public String translation;
 
+    public String title_translation;
+
     boolean showTranslation = false;
 
     public int getCount() {
@@ -61,13 +63,22 @@ public class Page {
      * constructor
      * @param url
      */
-    public Page(String url, String citation, String title, int count, String language, String translation) {
+    public Page(String url, String citation, String title, int count, String language, String translation, String title_translation) {
         this.url = url;
         this.citation = citation;
         this.title = title;
         this.count = count;
         this.language = language;
         this.translation = translation;
+        this.title_translation = title_translation;
+    }
+
+    public String getTitle_translation() {
+        return title_translation;
+    }
+
+    public void setTitle_translation(String title_translation) {
+        this.title_translation = title_translation;
     }
 
     /**

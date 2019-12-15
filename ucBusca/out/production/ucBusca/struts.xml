@@ -42,7 +42,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
         <!-- 'face_auth2' action calls 'execute' in 'FacebookRestAction' -->
         <action name="faceauth2" class="ucBusca.action.FacebookRestAction" method="execute">
-            <result name="success" type="dispatcher">/menu.jsp</result>
+            <result name="success" type="redirect">/menu.jsp</result>
         </action>
 
         <!-- 'translate' action calls 'execute' in 'TranslateAction' -->

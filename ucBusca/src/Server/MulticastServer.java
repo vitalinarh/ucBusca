@@ -790,13 +790,13 @@ public class MulticastServer extends Thread {
                     String title;
                     String citation;
 
-                    output += listUrls.size() + "|\n";
+                    output += listUrls.size() + "|";
                     int num = 0;
                     for (int i = urlListCounter.size() - 1; i >= 0; i--) {
                         num++;
                         title = wsInfo.get(urlListCounter.get(i).getUrl())[0];
                         citation = wsInfo.get(urlListCounter.get(i).getUrl())[1];
-                        output += title + "|\n\t" + urlListCounter.get(i).getUrl() + "|" + urlListCounter.get(i).getCount()+ "|\n\t- " + citation + "|\n\n";
+                        output += title + "|" + urlListCounter.get(i).getUrl() + "|" + urlListCounter.get(i).getCount()+ "|- " + citation + "|";
                         if(num == 9) {
                             break;
                         }
@@ -818,7 +818,7 @@ public class MulticastServer extends Thread {
                     if(urlMentionsList.get(ref) != null) {
                         output += urlMentionsList.get(ref).size();
                         for (int i = 0; i < urlMentionsList.get(ref).size(); i++) {
-                            output += "|\n";
+                            output += "|";
                             output += urlMentionsList.get(ref).get(i);
                         }
                     }
@@ -838,7 +838,7 @@ public class MulticastServer extends Thread {
                     for (User user: userList) {
                         if (user.getPortId() == id && user.searches != null) {
                             for (String search[]: user.searches) {
-                                output += "|\n";
+                                output += "|";
                                 for (String term: search) {
                                     output += term;
                                     output += " ";

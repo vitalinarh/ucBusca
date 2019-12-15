@@ -374,4 +374,9 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     public int getClientId(){
         return this.clientId;
     }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
 }

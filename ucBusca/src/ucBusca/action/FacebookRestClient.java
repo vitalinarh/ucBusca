@@ -20,9 +20,7 @@ import uc.sd.apis.FacebookApi2;
 import ucBusca.model.UcBuscaBean;
 
 public class FacebookRestClient extends ActionSupport implements SessionAware {
-  private static final String NETWORK_NAME = "Facebook";
-  private static final String PROTECTED_RESOURCE_URL = "https://graph.facebook.com/me";
-  private static final Token EMPTY_TOKEN = null;
+
   private Map<String, Object> session;
   private String authorizationUrl = null;
 
@@ -30,7 +28,6 @@ public class FacebookRestClient extends ActionSupport implements SessionAware {
   public String execute() throws Exception {
 
     this.authorizationUrl = this.getUcBuscaBean().getFacebookAuth();
-    System.out.println(this.authorizationUrl);
 
     return SUCCESS;
 

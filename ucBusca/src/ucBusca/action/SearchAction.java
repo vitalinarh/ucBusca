@@ -55,8 +55,9 @@ public class SearchAction extends ActionSupport implements SessionAware {
                 citation = searchResultList[i];
                 String lang = getUcBuscaBean().getLanguage(citation);
                 String translation = getUcBuscaBean().getTranslation(citation, lang);
+                String title_translation = getUcBuscaBean().getTranslation(title, lang);
                 i++;
-                Page newPage = new Page(url, citation, title, numReferences, lang, translation);
+                Page newPage = new Page(url, citation, title, numReferences, lang, translation, title_translation);
                 pagesList.add(newPage);
             }
 

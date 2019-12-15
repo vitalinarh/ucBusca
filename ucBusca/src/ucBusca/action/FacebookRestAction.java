@@ -3,6 +3,7 @@ package ucBusca.action;
 import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import com.github.scribejava.apis.FacebookApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -24,6 +25,7 @@ public class FacebookRestAction extends ActionSupport implements SessionAware {
     private Map<String, Object> session;
     private String code = null;
     private String facebookId = null;
+    private int facebookIdnum;
 
     @Override
     public String execute() throws Exception {
@@ -32,8 +34,13 @@ public class FacebookRestAction extends ActionSupport implements SessionAware {
             facebookId = this.getUcBuscaBean().getFacebookAuth2(this.code);
             if(facebookId != null) {
                 session.put("facebookName", facebookId);
-                session.put("loggedIn", true);
+                session.put("isAdmin", false);
+                session.put("isLogged", true);
                 System.out.println(facebookId);
+                facebookIdnum = Integer.parseInt(facebookId.split("id")[1].substring(3, 8));
+                String name = facebookId.split(",")[0].substring(9, facebookId.split(",")[0].length() - 1);
+                session.put("username", name);
+                this.getUcBuscaBean().setClientId(facebookIdnum);
                 return SUCCESS;
             }
         }
