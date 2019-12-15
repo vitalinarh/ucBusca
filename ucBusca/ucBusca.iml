@@ -21,8 +21,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="jsoup-1.12.1" level="project" />
-    <orderEntry type="library" name="async-http-client-1.9.31" level="project" />
     <orderEntry type="library" name="json_simple-1.1" level="project" />
     <orderEntry type="library" name="slf4j-api-1.7.13" level="project" />
+    <orderEntry type="library" name="retrofit-2.1.0" level="project" />
+    <orderEntry type="library" name="javax.ws.rs-api-2.0.1" level="project" />
+    <orderEntry type="library" name="jackson-jaxrs-base-2.5.4" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.5.4" level="project" />
+    <orderEntry type="library" name="async-http-client-1.9.31" level="project" />
   </component>
 </module>

@@ -12,6 +12,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+//todo:yandex imports
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
     private RMI_S server;
     private int clientId = 0;
@@ -132,6 +137,18 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
             return null;
         }
 
+    }
+
+    public String getLanguage(String text){
+        try {
+            System.out.println(text);
+            server.yandexLangDetector(text);
+            return null;
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getFacebookAuth2(String auth_url) throws RemoteException {

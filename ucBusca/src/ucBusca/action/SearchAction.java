@@ -1,20 +1,20 @@
 package ucBusca.action;
 
-import Server.UrlInfo;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 import ucBusca.model.UcBuscaBean;
 
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+
 public class SearchAction extends ActionSupport implements SessionAware {
     private static final long serialVersionUID = 5590830L;
     private Map<String, Object> session;
     private String search = null;
+    private static final String SAMPLE_KEY = "trnsl.1.1.20191214T152639Z.763aac1b6a3b7865.b01c2b569456e48f6058fd02c10d4f1dd7c84c3f";
     private ArrayList<Page> pagesList = new ArrayList<>();
 
     @Override
@@ -31,15 +31,23 @@ public class SearchAction extends ActionSupport implements SessionAware {
 
             numResults = Integer.parseInt(searchResultList[0]);
 
-            while(i + 4 <= searchResultList.length) {
+            System.out.println(searchResult);
+
+            while(i + 7 <= searchResultList.length) {
+                System.out.println(searchResultList[i]);
                 title = searchResultList[i];
                 i++;
+                System.out.println(searchResultList[i]);
                 url = searchResultList[i];
                 i++;
+                System.out.println(searchResultList[i]);
                 numReferences = Integer.parseInt(searchResultList[i]);
                 i++;
+                System.out.println(searchResultList[i]);
                 citation = searchResultList[i];
+                String lang = this.getUcBuscaBean().getLanguage(citation);
                 i++;
+                System.out.println(searchResultList[i]);
                 Page newPage = new Page(url, citation, title, numReferences);
                 pagesList.add(newPage);
             }

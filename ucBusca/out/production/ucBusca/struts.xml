@@ -31,6 +31,8 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
           <result>/menu.jsp</result>
         </action>
 
+
+
         <!-- 'face_auth' action calls 'execute' in 'FacebookRestClient' -->
         <action name="face_auth" class="ucBusca.action.FacebookRestClient" method="execute">
             <result name="success" type="redirect">${authorizationUrl}</result>

@@ -444,9 +444,9 @@ public class MulticastServer extends Thread {
 
                     //array that stores url info, title in index 0 and citation in index 1
                     String info[] = new String[2];
-                    info[0] = doc.title();
+                    info[0] = doc.title().replaceAll(Pattern.quote("|"), " ");
                     int length = doc.text().length();
-                    info[1] = doc.text().substring(length / 2 - length /20, length / 2 + length / 20);
+                    info[1] = doc.text().substring(length / 2 - length /20, length / 2 + length / 20).replaceAll(Pattern.quote("|"), " ");
                     wsInfo.put(ws, info);
 
                     //recursive counter is incremented

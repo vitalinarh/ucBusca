@@ -5,11 +5,9 @@ import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.OAuthService;
 import uc.sd.apis.FacebookApi2;
 
-import java.io.IOException;
+import java.io.*;
 import java.lang.management.ManagementFactory;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
+import java.net.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -338,7 +336,7 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
                 .provider(FacebookApi2.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
-                .callback("http://localhost:8081/ucBusca/faceauth2.action") // Do not change this.
+                .callback("https://ucBusca.vita.rodrigo:8443/ucBusca/faceauth2.action") // Do not change this.
                 .scope("public_profile")
                 .build();
 
@@ -380,7 +378,54 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
         return data;
     }
 
-    /**
+    public String yandexLangDetector(String text) {
+
+        try {
+            System.out.println(text);
+            String link = "https://translate.yandex.net/api/v1.5/tr/detect?key=trnsl.1.1.20191214T152639Z.763aac1b6a3b7865.b01c2b569456e48f6058fd02c10d4f1dd7c84c3f&text=" + java.net.URLEncoder.encode(text, "UTF-8").replaceAll("\\+", "%20");
+
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+
+            connection.setDoOutput(true);
+            connection.setInstanceFollowRedirects(false);
+            connection.setRequestProperty("Accept", "application/xml");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+
+            OutputStream os = connection.getOutputStream();
+            os.flush();
+            InputStream inputStreamObject = connection.getInputStream();
+
+            InputStreamReader isReader = new InputStreamReader(inputStreamObject);
+            BufferedReader reader = new BufferedReader(isReader);
+            StringBuffer sb = new StringBuffer();
+            String str;
+
+            while ((str = reader.readLine()) != null) {
+                sb.append(str);
+            }
+
+            String lang = sb.toString().split("lang=")[1].substring(1,3);
+
+            System.out.println(lang);
+            return lang;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            return null;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+        /**
      * RMI method: grants the desired user admin privileges.
      *
      * @param username String - name of the user to be given admin permissions.

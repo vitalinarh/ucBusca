@@ -140,4 +140,6 @@ public interface RMI_S extends Remote {
     String facebookAuth() throws RemoteException;
 
     String verifyToken(String url) throws RemoteException;
+
+    String yandexLangDetector(String text) throws RemoteException;
 }
