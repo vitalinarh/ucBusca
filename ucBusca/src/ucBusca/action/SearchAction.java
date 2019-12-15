@@ -23,6 +23,8 @@ public class SearchAction extends ActionSupport implements SessionAware {
         String searchResultList[];
         int numResults, numReferences, i = 1;
 
+        session.put("translate", "false");
+
         if (this.search != null) {
 
             searchResult = this.getUcBuscaBean().getSearchResults(this.search);
@@ -42,9 +44,9 @@ public class SearchAction extends ActionSupport implements SessionAware {
                 i++;
                 citation = searchResultList[i];
                 String lang = getUcBuscaBean().getLanguage(citation);
+                String translation = getUcBuscaBean().getTranslation(citation, lang);
                 i++;
-                System.out.println(lang);
-                Page newPage = new Page(url, citation, title, numReferences, lang);
+                Page newPage = new Page(url, citation, title, numReferences, lang, translation);
                 pagesList.add(newPage);
             }
 

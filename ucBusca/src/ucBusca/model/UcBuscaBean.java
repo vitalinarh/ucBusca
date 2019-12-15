@@ -158,6 +158,18 @@ public class UcBuscaBean extends UnicastRemoteObject implements RMI_C {
         }
     }
 
+    public String getTranslation(String text, String lang){
+        try {
+
+            return server.yandexTranslate(text, lang);
+
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String getFacebookAuth2(String auth_url) throws RemoteException {
 
         return server.verifyToken(auth_url);

@@ -145,4 +145,6 @@ public interface RMI_S extends Remote {
     String verifyToken(String url) throws RemoteException;
 
     String yandexLangDetector(String text) throws RemoteException;
+
+    String yandexTranslate(String text, String lang) throws RemoteException;
 }

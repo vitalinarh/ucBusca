@@ -36,21 +36,42 @@
 
 </div>
 
-    <c:choose>
-        <c:when test="${empty session.searchResults}">
-            <p>No Results</p>
-        </c:when>
-        <c:otherwise>
-            <p>Search Results</p>
-            <p>Number of results: ${session.numResults}</p><br>
-            <c:forEach items="${session.searchResults}" var="line">
-                <p style="font-weight: bolder; font-family: Arial; font-size: 22px" >${line.title}.</p>
-                <p>Original Language ${line.language}.</p>
-                <a href = ${line.url}>${line.url}</a>
-                <p>Referenced ${line.count} times.</p>
-                <p>${line.citation}.</p><br>
-            </c:forEach>
-        </c:otherwise>
-    </c:choose>
+    <div id = "results">
+        <c:choose>
+            <c:when test="${empty session.searchResults}">
+                <p>No Results</p>
+            </c:when>
+            <c:otherwise>
+                <p>Search Results</p>
+                <c:choose>
+                    <c:when test="${session.translate == 'false'}">
+                        <p><a href="<s:url action="translate" />">Translate Page To Portuguese</a></p>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="column">
+                            <p><a href="<s:url action="translate" />">Show Original</a></p>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+
+                <p>Number of results: ${session.numResults}</p><br>
+                <c:forEach items="${session.searchResults}" var="line">
+                    <p style="font-weight: bolder; font-family: Arial; font-size: 22px" >${line.title}.</p>
+                    <p>Original Language ${line.language}.</p>
+                    <a href = ${line.url}>${line.url}</a>
+                    <c:choose>
+                        <c:when test="${session.translate == 'false'}">
+                            <p>${line.citation}.</p><br>
+                        </c:when>
+                        <c:otherwise>
+                            <p>Translation To Portuguese: ${line.translation}.</p>
+                        </c:otherwise>
+                    </c:choose>
+                    <p>Referenced ${line.count} times.</p>
+
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </body>
 </html>

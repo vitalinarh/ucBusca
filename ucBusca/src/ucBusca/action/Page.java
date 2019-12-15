@@ -29,6 +29,10 @@ public class Page {
      */
     public String language;
 
+    public String translation;
+
+    boolean showTranslation = false;
+
     public int getCount() {
         return count;
     }
@@ -45,16 +49,25 @@ public class Page {
         this.language = language;
     }
 
+    public String getTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(String translation) {
+        this.translation = translation;
+    }
+
     /**
      * constructor
      * @param url
      */
-    public Page(String url, String citation, String title, int count, String language) {
+    public Page(String url, String citation, String title, int count, String language, String translation) {
         this.url = url;
         this.citation = citation;
         this.title = title;
         this.count = count;
         this.language = language;
+        this.translation = translation;
     }
 
     /**

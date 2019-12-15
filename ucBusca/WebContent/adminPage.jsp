@@ -40,7 +40,7 @@
 			//writeToNotificationBoard('WebSocket closed (code ' + event.code + ').');
 		}
 
-		function onMessage(message) { // print the received message
+			function onMessage(message) { // print the received message
 
 			if(message[0] == "s" && message[1] == "t" && message[2] == "a" && message[3] == "i"){
 				message = message.substring(11);

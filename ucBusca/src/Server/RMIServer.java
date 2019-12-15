@@ -421,8 +421,54 @@ public class RMIServer extends UnicastRemoteObject implements RMI_S {
             }
 
             String lang = sb.toString().split("lang=")[1].substring(1,3);
-            System.out.println(lang);
             return lang;
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+            return null;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String yandexTranslate(String text, String lang) {
+
+        try {
+
+            String link = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20191214T152639Z.763aac1b6a3b7865.b01c2b569456e48f6058fd02c10d4f1dd7c84c3f&text="+java.net.URLEncoder.encode(text, "UTF-8").replaceAll("\\+", "%20")+"&lang="+lang+"-pt";
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+
+            connection.setDoOutput(true);
+            connection.setInstanceFollowRedirects(false);
+            connection.setRequestProperty("Accept", "application/xml");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+
+            OutputStream os = connection.getOutputStream();
+            os.flush();
+            InputStream inputStreamObject = connection.getInputStream();
+
+            InputStreamReader isReader = new InputStreamReader(inputStreamObject);
+            BufferedReader reader = new BufferedReader(isReader);
+            StringBuffer sb = new StringBuffer();
+            String str;
+
+            while ((str = reader.readLine()) != null) {
+                sb.append(str);
+            }
+
+            String translation = sb.toString().split("text")[1];
+            translation = translation.substring(7, translation.length() - 3);
+
+            return translation;
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
