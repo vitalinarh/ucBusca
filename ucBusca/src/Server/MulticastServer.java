@@ -888,18 +888,37 @@ public class MulticastServer extends Thread {
                 }
 
                 else if (type.equals("adminPage")) {
+
                     //10 most important pages
-                    output = "Most Important Pages: \n";
-                    for (UrlInfo info: urlsByOrder) {
-                        output += info.getUrl();
-                        output += "\n";
+                    String mostSearchedURLs = "";
+                    if(urlsByOrder.isEmpty())
+                        mostSearchedURLs = "no data";
+                    else {
+                        for (UrlInfo info : urlsByOrder) {
+                            mostSearchedURLs += info.getUrl();
+                            mostSearchedURLs += "!";
+                        }
+                    }
+                    //10 most searched terms
+                    String mostSearchedWords = "";
+                    if(searchesByOrder.isEmpty())
+                        mostSearchedWords = "no data";
+                    else {
+                        for (String term: searchesByOrder) {
+                            mostSearchedWords += term + "!";
+                        }
                     }
 
-                    //10 most searched terms
-                    output += "\nMost Searched Terms (Sorted by popularity):\n";
-                    for (String term: searchesByOrder) {
-                        output += term + "\n";
-                    }
+                    output = "mostSearchedWords | " + mostSearchedWords + " ; mostSearchedURLs | " + mostSearchedURLs;
+
+                    byte[] buffer2 = output.getBytes();
+                    DatagramPacket packet2 = new DatagramPacket(buffer2, buffer2.length, group, id);
+                    socketOut.send(packet2);
+
+                    buffer = output.getBytes();
+                    packet2 = new DatagramPacket(buffer, buffer.length, group, PORTout);
+                    socketOut.send(packet2);
+
                 }
             }
 

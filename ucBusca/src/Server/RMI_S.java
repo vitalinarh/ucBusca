@@ -4,6 +4,7 @@ import com.github.scribejava.core.model.Response;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  * RMI interface for RMIServer.
@@ -115,7 +116,7 @@ public interface RMI_S extends Remote {
      * @return
      * @throws RemoteException
      */
-    String adminGetAdminPage(int clientId) throws RemoteException;
+    ArrayList<String> adminGetAdminPage(int clientId) throws RemoteException;
 
     /**
      * RMI method: grants the desired user admin privileges.
@@ -128,6 +129,8 @@ public interface RMI_S extends Remote {
      * @author Rodrigo Martins
      */
     int adminGiveAdminPrivilege(String username, int clientId) throws RemoteException;
+
+    ArrayList<String> checkNotification(int clientId) throws RemoteException;
 
     /**
      * RMI method: facebook authentication.

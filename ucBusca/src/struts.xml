@@ -12,6 +12,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
     <!-- devMode equals debug information and reload everything for every request -->
     <constant name="struts.devMode" value="true" />
     <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.action.excludePattern" value="/ws"/>
 
     <package name="ucBusca" extends="struts-default">
 
@@ -101,6 +102,16 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <action name="searchHistory" class="ucBusca.action.SearchHistoryAction" method="execute">
             <result name="success">/searchHistory.jsp</result>
             <result name="error">/searchHistory.jsp</result>
+        </action>
+
+        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <action name="adminPage" class="ucBusca.action.AdminPageAction" method="execute">
+            <result name="success">/adminPage.jsp</result>
+        </action>
+
+        <!-- 'searchHistory' action calls 'execute' in 'SearchHistoryAction' -->
+        <action name="menuFromAdminPage" class="ucBusca.action.LeaveAdminPageAction" method="execute">
+            <result name="success">/menu.jsp</result>
         </action>
 
     </package>

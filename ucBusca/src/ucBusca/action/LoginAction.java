@@ -29,6 +29,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     session.put("isAdmin", false);
 
                     session.put("username", this.username);
+                    session.put("userId", this.getUcBuscaBean().getClientId());
 
                     return SUCCESS;
 
@@ -37,6 +38,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
                     session.put("isAdmin", true);
 
                     session.put("username", this.username);
+                    session.put("userId", this.getUcBuscaBean().getClientId());
 
                     return SUCCESS;
 

@@ -1,14 +1,15 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="ucBusca">
-    <output-path>$PROJECT_DIR$/out/artifacts/ucBusca</output-path>
-    <root id="archive" name="ucBusca.war">
+  <artifact type="war" name="ucBuscaWAR">
+    <output-path>$PROJECT_DIR$/out/artifacts/ucBuscaWAR</output-path>
+    <root id="archive" name="ucBuscaWAR.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="ucBusca" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="lib" />
           <element id="library" level="project" name="jsoup-1.12.1" />
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="lib1" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="ucBusca/web/Web" />
